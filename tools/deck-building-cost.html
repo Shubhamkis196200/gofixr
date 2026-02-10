@@ -9,10 +9,13 @@
     <meta property="og:description" content="Estimate deck construction costs based on size, material, and design complexity.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://gofixr.com/tools/deck-building-cost.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="canonical" href="https://gofixr.com/tools/deck-building-cost.html">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Deck Building Cost Estimator | GoFixr - Home Repair Tools","url":"https://gofixr.com/tools/deck-building-cost.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 </head>
 <body>
     <!-- Navigation -->
@@ -20,7 +23,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <a href="../index.html" class="text-2xl font-bold brand-orange">GoFixr</a>
+                    <a href="../index.html" class="text-2xl font-bold"><span class="brand-orange">Go</span><span class="text-white">Fixr</span></a>
                 </div>
                 <div class="hidden md:flex space-x-1">
                     <a href="../index.html" class="nav-link">Home</a>
@@ -28,6 +31,19 @@
                     <a href="../guides.html" class="nav-link">Guides</a>
                     <a href="../about.html" class="nav-link">About</a>
                 </div>
+                <div class="md:hidden">
+                    <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobileMenu" class="hidden md:hidden border-t border-gray-600 pb-4">
+                <a href="../index.html" class="block px-4 py-2 text-sm hover:bg-gray-700 rounded">Home</a>
+                <a href="../index.html#tools" class="block px-4 py-2 text-sm hover:bg-gray-700 rounded">Tools</a>
+                <a href="../guides.html" class="block px-4 py-2 text-sm hover:bg-gray-700 rounded">Guides</a>
+                <a href="../about.html" class="block px-4 py-2 text-sm hover:bg-gray-700 rounded">About</a>
             </div>
         </div>
     </nav>
@@ -105,6 +121,7 @@
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
                 <p>&copy; 2026 GoFixr.com - All rights reserved. Always consult a licensed professional for complex repairs.</p>
+                <p class="mt-2"><a href="../contact.html" class="hover:text-orange-400">Contact</a> · <a href="../disclaimer.html" class="hover:text-orange-400">Disclaimer</a> · <a href="../privacy.html" class="hover:text-orange-400">Privacy</a> · <a href="../terms.html" class="hover:text-orange-400">Terms</a></p>
             </div>
         </div>
     </footer>

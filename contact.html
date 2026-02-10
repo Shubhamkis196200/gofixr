@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact GoFixr | Get in Touch</title>
+    <meta name="description" content="Contact GoFixr with questions, tool suggestions, or bug reports. We'd love to hear from you.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="canonical" href="https://gofixr.com/contact.html">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="bg-brand-blue text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="text-2xl font-bold"><span class="brand-orange">Go</span>Fixr</a>
+                <div class="hidden md:flex space-x-1">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="index.html#tools" class="nav-link">Tools</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="about.html" class="nav-link">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-4 py-12">
+        <h1 class="text-5xl font-bold mb-6">Contact Us</h1>
+        <p class="text-xl text-gray-700 mb-8">Have a question about one of our tools? Want to suggest a new calculator? Found a bug? We'd love to hear from you.</p>
+
+        <form id="contact-form" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8 space-y-6">
+            <div>
+                <label class="block text-sm font-semibold mb-1">Your Name</label>
+                <input type="text" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent" placeholder="Jane Smith">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold mb-1">Email Address</label>
+                <input type="email" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent" placeholder="jane@example.com">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold mb-1">Subject</label>
+                <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400">
+                    <option>Tool suggestion</option>
+                    <option>Bug report</option>
+                    <option>General question</option>
+                    <option>Partnership inquiry</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold mb-1">Message</label>
+                <textarea rows="5" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent" placeholder="Tell us what's on your mind..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary px-8 py-3">Send Message</button>
+            <div id="form-success" class="hidden bg-green-50 text-green-700 rounded-lg p-4 text-sm font-medium">
+                ✅ Thanks for reaching out! We'll get back to you within 48 hours.
+            </div>
+        </form>
+    </main>
+
+    <footer class="bg-brand-blue text-white mt-16 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-4"><span class="brand-orange">Go</span>Fixr</h3>
+                <p class="text-gray-300 mb-4">Your trusted home repair companion</p>
+                <div class="flex justify-center gap-6 text-sm">
+                    <a href="index.html" class="footer-link">Home</a>
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                    <a href="terms.html" class="footer-link">Terms</a>
+                    <a href="disclaimer.html" class="footer-link">Disclaimer</a>
+                </div>
+                <p class="text-sm text-gray-400 mt-8">&copy; 2026 GoFixr.com - All rights reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('form-success').classList.remove('hidden');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

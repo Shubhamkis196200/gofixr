@@ -2,84 +2,88 @@
 (function() {
     const content = {
         interface: `
-            <h2 class="text-2xl font-bold mb-6">Calculate Your Project Cost</h2>
-            <form id="costForm" class="space-y-4">
+            <h2 class="text-2xl font-bold mb-6">Flooring Cost Calculator</h2>
+            <form id="floorForm" class="space-y-4">
                 <div class="input-group">
-                    <label>Project Size (sq ft)</label>
-                    <input type="number" id="sqft" min="1" value="100" required>
+                    <label>Room Area (sq ft)</label>
+                    <input type="number" id="area" min="10" value="200" step="10" required>
                 </div>
                 <div class="input-group">
-                    <label>Quality Level</label>
-                    <select id="quality">
-                        <option value="budget">Budget (Basic materials)</option>
-                        <option value="standard" selected>Standard (Mid-grade)</option>
-                        <option value="premium">Premium (High-end)</option>
+                    <label>Flooring Material</label>
+                    <select id="material">
+                        <option value="lvp" selected>Luxury Vinyl Plank ($2-5/sqft)</option>
+                        <option value="laminate">Laminate ($1-4/sqft)</option>
+                        <option value="hardwood">Hardwood ($5-12/sqft)</option>
+                        <option value="eng">Engineered Hardwood ($4-10/sqft)</option>
+                        <option value="tile">Ceramic Tile ($1-6/sqft)</option>
+                        <option value="carpet">Carpet ($2-7/sqft)</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <label>Location Type</label>
-                    <select id="location">
-                        <option value="rural">Rural</option>
-                        <option value="suburban" selected>Suburban</option>
-                        <option value="urban">Urban</option>
+                    <label>Installation</label>
+                    <select id="install">
+                        <option value="diy">DIY</option>
+                        <option value="pro" selected>Professional ($2-6/sqft)</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <label>Include Labor?</label>
-                    <select id="labor">
-                        <option value="yes" selected>Yes - Full Installation</option>
-                        <option value="no">No - DIY (Materials Only)</option>
-                    </select>
+                    <label><input type="checkbox" id="removal" checked> Include old floor removal ($1-2/sqft)</label>
                 </div>
                 <button type="submit" class="btn-primary w-full">Calculate Cost</button>
             </form>
             <div id="result" class="hidden"></div>
         `,
-        
         education: `
-            <h2 class="text-3xl font-bold mb-4">Understanding Project Costs</h2>
+            <h2 class="text-3xl font-bold mb-4">Flooring Guide</h2>
             <div class="pro-tip mb-6">
                 <h4 class="font-bold mb-2">💡 Pro Tip</h4>
-                <p>Get at least 3 quotes from licensed contractors. Costs vary by region.</p>
+                <p>Buy 10% extra for cuts and waste. LVP and laminate are the most DIY-friendly. Hardwood and tile usually need a pro.</p>
             </div>
-            <h3 class="text-2xl font-bold mt-6 mb-3">Cost Breakdown</h3>
-            <ul class="list-disc pl-6 space-y-2 my-4">
-                <li><strong>Materials:</strong> 40-60% of total cost</li>
-                <li><strong>Labor:</strong> 30-50% of total cost</li>
-                <li><strong>Permits:</strong> 5-10% of total cost</li>
+            <h3 class="text-2xl font-bold mt-6 mb-3">Best For Each Room</h3>
+            <ul class="list-disc pl-6 space-y-2">
+                <li><strong>Kitchen/Bath:</strong> LVP or tile (water resistant)</li>
+                <li><strong>Living/Bedroom:</strong> Hardwood, LVP, or carpet</li>
+                <li><strong>Basement:</strong> LVP or engineered (handles moisture)</li>
+                <li><strong>High traffic:</strong> LVP or tile (most durable)</li>
             </ul>
         `
     };
 
+    const matPrices = {
+        lvp:      { low: 2, high: 5, installLow: 2, installHigh: 4 },
+        laminate: { low: 1, high: 4, installLow: 1.5, installHigh: 3 },
+        hardwood: { low: 5, high: 12, installLow: 3, installHigh: 6 },
+        eng:      { low: 4, high: 10, installLow: 3, installHigh: 5 },
+        tile:     { low: 1, high: 6, installLow: 4, installHigh: 8 },
+        carpet:   { low: 2, high: 7, installLow: 1, installHigh: 2 }
+    };
+
     function calculate(e) {
         e.preventDefault();
-        const sqft = parseFloat(document.getElementById('sqft').value);
-        const quality = document.getElementById('quality').value;
-        const location = document.getElementById('location').value;
-        const labor = document.getElementById('labor').value;
-        
-        const baseCosts = { budget: 15, standard: 30, premium: 60 };
-        let costPerSqft = baseCosts[quality];
-        const locationMult = { rural: 0.85, suburban: 1.0, urban: 1.25 };
-        costPerSqft *= locationMult[location];
-        
-        let materialCost = sqft * costPerSqft * 0.5;
-        let laborCost = labor === 'yes' ? sqft * costPerSqft * 0.5 : 0;
-        let totalCost = materialCost + laborCost;
-        const contingency = totalCost * 0.1;
-        
-        displayResult({ sqft, materialCost, laborCost, contingency, totalCost, quality, location });
-    }
+        const area = parseFloat(document.getElementById('area').value);
+        const mat = document.getElementById('material').value;
+        const isPro = document.getElementById('install').value === 'pro';
+        const removal = document.getElementById('removal').checked;
+        const p = matPrices[mat];
 
-    function displayResult(d) {
+        const matLow = area * p.low;
+        const matHigh = area * p.high;
+        const instLow = isPro ? area * p.installLow : 0;
+        const instHigh = isPro ? area * p.installHigh : 0;
+        const removalCost = removal ? area * 1.5 : 0;
+        const totalLow = matLow + instLow + removalCost;
+        const totalHigh = matHigh + instHigh + removalCost;
+
         document.getElementById('result').className = 'result-box mt-6';
         document.getElementById('result').innerHTML = `
-            <h3 class="text-3xl font-bold mb-4">Estimated Cost: $${d.totalCost.toLocaleString('en-US', {maximumFractionDigits: 0})}</h3>
+            <h3 class="text-3xl font-bold mb-4">$${totalLow.toFixed(0)} – $${totalHigh.toFixed(0)}</h3>
             <div class="bg-white bg-opacity-20 rounded-lg p-4">
                 <div class="space-y-2">
-                    <div class="flex justify-between"><span>Materials:</span><span class="font-bold">$${d.materialCost.toLocaleString()}</span></div>
-                    ${d.laborCost > 0 ? `<div class="flex justify-between"><span>Labor:</span><span class="font-bold">$${d.laborCost.toLocaleString()}</span></div>` : ''}
-                    <div class="flex justify-between"><span>Contingency:</span><span class="font-bold">$${d.contingency.toLocaleString()}</span></div>
+                    <div class="flex justify-between"><span>Area:</span><span>${area} sq ft</span></div>
+                    <div class="flex justify-between"><span>Material:</span><span>$${matLow.toFixed(0)} – $${matHigh.toFixed(0)}</span></div>
+                    ${isPro ? `<div class="flex justify-between"><span>Installation:</span><span>$${instLow.toFixed(0)} – $${instHigh.toFixed(0)}</span></div>` : '<div class="flex justify-between"><span>Installation:</span><span>DIY (free labor)</span></div>'}
+                    ${removal ? `<div class="flex justify-between"><span>Old floor removal:</span><span>$${removalCost.toFixed(0)}</span></div>` : ''}
+                    <div class="border-t border-white pt-2 flex justify-between font-bold"><span>Total:</span><span>$${totalLow.toFixed(0)} – $${totalHigh.toFixed(0)}</span></div>
                 </div>
             </div>
         `;
@@ -87,7 +91,7 @@
 
     document.getElementById('toolInterface').innerHTML = content.interface;
     document.getElementById('educationalContent').innerHTML = content.education;
-    document.getElementById('costForm').addEventListener('submit', calculate);
+    document.getElementById('floorForm').addEventListener('submit', calculate);
     loadRelatedTools('cost');
 })();
 
@@ -97,7 +101,7 @@ function loadRelatedTools(category) {
         document.getElementById('relatedTools').innerHTML = related.map(t => `
             <a href="${t.slug}.html" class="tool-card block">
                 <div class="text-3xl mb-2">${t.icon}</div>
-                <h4 class="font-bold text-lg mb-1">${t.name}</h4>
+                <h4 class="font-bold">${t.name}</h4>
                 <p class="text-sm text-gray-600">${t.desc}</p>
             </a>
         `).join('');
