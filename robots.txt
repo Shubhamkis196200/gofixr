@@ -1,20 +1,7 @@
 # GoFixr.com - Robots.txt
-# Home Repair Tools & Calculators
-
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://gofixr.com/sitemap.xml
+Sitemap: https://gofixr.netlify.app/sitemap.xml
 
-# Disallow test/development pages
 Disallow: /test-sample.html
-Disallow: /site/
-
-# Allow all tools and content
-Allow: /tools/
-Allow: /guides.html
-Allow: /about.html
-
-# Crawl rate (optional - for considerate crawling)
-Crawl-delay: 1

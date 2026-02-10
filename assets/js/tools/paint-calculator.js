@@ -117,16 +117,3 @@
     document.getElementById('paintForm').addEventListener('submit', calculate);
     loadRelatedTools('planning');
 })();
-
-function loadRelatedTools(category) {
-    fetch('../tools-data.json').then(r => r.json()).then(tools => {
-        const related = tools.filter(t => t.category === category).slice(0, 3);
-        document.getElementById('relatedTools').innerHTML = related.map(t => `
-            <a href="${t.slug}.html" class="tool-card block">
-                <div class="text-3xl mb-2">${t.icon}</div>
-                <h4 class="font-bold">${t.name}</h4>
-                <p class="text-sm text-gray-600">${t.desc}</p>
-            </a>
-        `).join('');
-    });
-}

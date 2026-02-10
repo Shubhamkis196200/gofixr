@@ -1,140 +1,139 @@
-// Tool Finder Quiz
+// Tool Finder Quiz - Multi-step project-based tool recommendations
 (function() {
+    const toolDB = {
+        'painting': {
+            name: 'Interior Painting',
+            basic: ['Paint roller (9" with 3/8" nap)', 'Roller tray', 'Angled sash brush (2.5")', 'Blue painter\'s tape', 'Drop cloths', 'Paint can opener & stir sticks'],
+            intermediate: ['Extension pole (4-8 ft)', 'Mini roller (4") for trim', 'Paint edger tool', '5-in-1 painter\'s tool', 'Plastic sheeting for furniture'],
+            pro: ['Paint sprayer (HVLP or airless)', 'Spray shelter tent', 'Masking machine', 'Pole sander for prep']
+        },
+        'drywall': {
+            name: 'Drywall Repair',
+            basic: ['Putty knife set (2", 4", 6")', 'Joint compound (pre-mixed)', 'Self-adhesive mesh tape', 'Sanding sponge (fine)', 'Utility knife'],
+            intermediate: ['Drywall saw (jab saw)', '6" and 10" taping knives', 'Drywall patch kit', 'Mud pan', 'Corner tool'],
+            pro: ['Drywall T-square', 'Drywall screw gun', 'Automatic taper', 'Stilt set', 'Drywall lift (rent)']
+        },
+        'plumbing': {
+            name: 'Basic Plumbing',
+            basic: ['Adjustable wrench (10")', 'Tongue-and-groove pliers (10")', 'Plunger (flange type)', 'Teflon tape', 'Bucket & towels'],
+            intermediate: ['Basin wrench', 'Pipe wrench (14")', 'Tubing cutter', 'Drain snake (25 ft)', 'PVC primer & cement'],
+            pro: ['Propane torch & solder kit', 'PEX crimp tool', 'Cast iron snap cutter (rent)', 'Inspection camera']
+        },
+        'electrical': {
+            name: 'Electrical Work',
+            basic: ['Non-contact voltage tester', 'Insulated screwdriver set', 'Wire strippers', 'Needle-nose pliers', 'Electrical tape'],
+            intermediate: ['Digital multimeter', 'Fish tape (25 ft)', 'Wire nuts assortment', 'Cable ripper', 'Circuit breaker finder'],
+            pro: ['Conduit bender', 'Wire pulling grip set', 'Hole saw kit', 'Label maker for panels']
+        },
+        'deck': {
+            name: 'Deck Building/Repair',
+            basic: ['Circular saw', 'Drill/driver + bit set', 'Speed square', 'Tape measure (25 ft)', 'Chalk line', 'Level (4 ft)'],
+            intermediate: ['Impact driver', 'Jigsaw', 'Deck board straightening tool', 'Post level', 'Clamps (bar, 4 pack)'],
+            pro: ['Miter saw (10" or 12")', 'Hidden fastener system', 'Router + roundover bit', 'Post hole digger or auger (rent)']
+        },
+        'tile': {
+            name: 'Tile Installation',
+            basic: ['Notched trowel (1/4" × 3/8")', 'Tile spacers', 'Grout float', 'Sponge & bucket', 'Tile nippers'],
+            intermediate: ['Manual tile cutter (24")', 'Level + straight edge', 'Grout removal tool', 'Mixing drill + paddle', 'Knee pads'],
+            pro: ['Wet tile saw (rent)', 'Diamond hole saw set', 'Tile leveling system', 'Laser level']
+        },
+        'landscape': {
+            name: 'Landscaping / Yard',
+            basic: ['Round-point shovel', 'Garden rake', 'Wheelbarrow', 'Work gloves', 'Tape measure'],
+            intermediate: ['Tamper / plate compactor (rent)', 'Edger', 'Post hole digger', 'Landscape fabric & stakes', 'String level'],
+            pro: ['Mini excavator (rent)', 'Laser transit level', 'Sod cutter (rent)', 'Retaining wall tools']
+        }
+    };
+
     const content = {
         interface: `
-            <h2 class="text-2xl font-bold mb-6">Find the Right Tool for Your Project</h2>
-            <form id="utilityForm" class="space-y-4">
+            <h2 class="text-2xl font-bold mb-6">Tool Finder Quiz</h2>
+            <p class="text-gray-600 mb-4">Answer a few questions to get a customized tool list for your project.</p>
+            <form id="planningForm" class="space-y-4">
                 <div class="input-group">
-                    <label>What kind of project are you planning?</label>
+                    <label>What type of project?</label>
                     <select id="projectType">
-                        <option value="repair">Fix / Repair Something Broken</option>
-                        <option value="improve">Home Improvement / Upgrade</option>
-                        <option value="maintain">Maintenance / Prevention</option>
-                        <option value="estimate">Get a Cost Estimate</option>
-                        <option value="calculate">Calculate Materials Needed</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>What area of the home?</label>
-                    <select id="area">
-                        <option value="kitchen">Kitchen</option>
-                        <option value="bathroom">Bathroom</option>
-                        <option value="exterior">Exterior / Siding / Roof</option>
-                        <option value="plumbing">Plumbing System</option>
-                        <option value="electrical">Electrical System</option>
-                        <option value="hvac">Heating & Cooling</option>
-                        <option value="flooring">Floors</option>
-                        <option value="walls">Walls & Ceilings</option>
-                        <option value="outdoor">Yard / Deck / Patio</option>
-                        <option value="general">General / Whole House</option>
+                        ${Object.entries(toolDB).map(([k,v]) => `<option value="${k}">${v.name}</option>`).join('')}
                     </select>
                 </div>
                 <div class="input-group">
                     <label>Your experience level?</label>
-                    <select id="experience">
-                        <option value="beginner">Beginner — First time doing this</option>
-                        <option value="intermediate" selected>Intermediate — Some DIY experience</option>
-                        <option value="advanced">Advanced — Comfortable with most projects</option>
+                    <select id="level">
+                        <option value="basic">Beginner — first time doing this</option>
+                        <option value="intermediate" selected>Intermediate — done a few projects</option>
+                        <option value="pro">Advanced — experienced DIYer</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-primary w-full">Find My Tools</button>
+                <div class="input-group">
+                    <label>Budget priority?</label>
+                    <select id="budget">
+                        <option value="minimal">Minimal — bare essentials only</option>
+                        <option value="balanced" selected>Balanced — good tools without overspending</option>
+                        <option value="invest">Invest — buy quality tools for future projects</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary w-full">Get My Tool List</button>
             </form>
             <div id="result" class="hidden"></div>
         `,
         education: `
-            <h2 class="text-3xl font-bold mb-4">Choosing the Right Tool for Every Job</h2>
-            <p class="mb-4">GoFixr offers over 50 free calculators, estimators, troubleshooters, and planning tools for every home repair and improvement need. But with so many options, it can be hard to know where to start. This quiz matches you with the most relevant tools based on your specific project, the area of your home involved, and your experience level.</p>
-
+            <h2 class="text-3xl font-bold mb-4">Building Your Tool Collection</h2>
             <div class="pro-tip mb-6">
-                <h4 class="font-bold">💡 Pro Tip</h4>
-                <p>Start with a cost estimator to budget your project, then use a material calculator to build your shopping list, and finally check the DIY vs. Hire tool to decide whether to tackle it yourself. This three-step approach prevents the most common DIY mistakes: underbudgeting, buying the wrong quantities, and taking on projects beyond your skill level.</p>
+                <h4 class="font-bold mb-2">💡 Pro Tip</h4>
+                <p>Rent expensive single-use tools (wet saw, plate compactor). Buy tools you'll use more than 3 times.</p>
             </div>
-
-            <h3 class="text-2xl font-bold mt-6 mb-3">Tool Categories Explained</h3>
-            <ul class="list-disc pl-6 space-y-2 mb-4">
-                <li><strong>Cost Estimators:</strong> Get realistic budget ranges for renovation and repair projects based on your specifications. Great for comparing quotes from contractors</li>
-                <li><strong>Material Calculators:</strong> Know exactly how much paint, tile, concrete, mulch, or lumber to buy. Includes waste factors so you don't come up short</li>
-                <li><strong>Troubleshooters:</strong> Diagnose problems with toilets, HVAC systems, water heaters, electrical issues, and more. Step-by-step symptom analysis with repair recommendations</li>
-                <li><strong>Planning Tools:</strong> Maintenance schedules, project timelines, DIY vs. hire decisions, emergency checklists, and repair priority planners</li>
+            <h3 class="text-2xl font-bold mt-6 mb-3">Essential Safety Gear (Every Project)</h3>
+            <ul class="list-disc pl-6 space-y-2">
+                <li>Safety glasses (ANSI Z87.1 rated)</li>
+                <li>Work gloves appropriate for the task</li>
+                <li>Hearing protection for power tools</li>
+                <li>Dust mask or N95 for sanding/cutting</li>
+                <li>First aid kit nearby</li>
             </ul>
-
-            <h3 class="text-2xl font-bold mt-6 mb-3">Most Popular Tools</h3>
-            <p class="mb-4">Our most-used tools are the <strong>Paint Calculator</strong> (everyone needs to know how many gallons to buy), the <strong>Bathroom Remodel Cost Estimator</strong> (bathrooms are the #1 renovation project), and the <strong>DIY vs. Hire Calculator</strong> (which helps you honestly assess whether a project is within your capabilities). The <strong>Toilet Troubleshooter</strong> is our most popular diagnostic tool — because a running toilet is something every homeowner encounters.</p>
-
-            <h3 class="text-2xl font-bold mt-6 mb-3">When to DIY vs. When to Hire</h3>
-            <p class="mb-4">As a general rule: cosmetic projects (painting, simple flooring, landscaping) are great for DIY. Anything involving structural changes, electrical wiring, gas lines, or major plumbing should involve licensed professionals. Our DIY vs. Hire tool gives you a personalized assessment based on your specific project and skill level.</p>
         `
-    };
-
-    const toolMap = {
-        'repair-kitchen':    [{slug:'garbage-disposal-fix',name:'Garbage Disposal Troubleshooter',icon:'🔧'},{slug:'appliance-error-codes',name:'Appliance Error Code Lookup',icon:'📱'},{slug:'plumbing-noise-identifier',name:'Plumbing Noise Identifier',icon:'🔊'}],
-        'repair-bathroom':   [{slug:'toilet-troubleshooter',name:'Toilet Troubleshooter',icon:'🚽'},{slug:'plumbing-noise-identifier',name:'Plumbing Noise Identifier',icon:'🔊'},{slug:'grout-calculator',name:'Grout Calculator',icon:'🔲'}],
-        'repair-exterior':   [{slug:'roof-leak-locator',name:'Roof Leak Locator',icon:'🔍'},{slug:'foundation-crack-evaluator',name:'Foundation Crack Evaluator',icon:'🏗️'},{slug:'siding-installation-cost',name:'Siding Cost Estimator',icon:'🏠'}],
-        'repair-plumbing':   [{slug:'toilet-troubleshooter',name:'Toilet Troubleshooter',icon:'🚽'},{slug:'plumbing-noise-identifier',name:'Plumbing Noise Identifier',icon:'🔊'},{slug:'plumbing-repair-cost',name:'Plumbing Repair Cost',icon:'🔧'}],
-        'repair-electrical': [{slug:'electrical-diagnoser',name:'Electrical Diagnoser',icon:'⚡'},{slug:'electrical-work-cost',name:'Electrical Work Cost',icon:'💡'},{slug:'load-calculator',name:'Load Calculator',icon:'📊'}],
-        'repair-hvac':       [{slug:'hvac-diagnoser',name:'HVAC Troubleshooter',icon:'❄️'},{slug:'water-heater-troubleshooter',name:'Water Heater Troubleshooter',icon:'🔥'},{slug:'btu-calculator',name:'BTU Calculator',icon:'🌡️'}],
-        'repair-flooring':   [{slug:'flooring-cost',name:'Flooring Cost Estimator',icon:'🏠'},{slug:'tile-calculator',name:'Tile Calculator',icon:'🔲'},{slug:'grout-calculator',name:'Grout Calculator',icon:'🔲'}],
-        'repair-walls':      [{slug:'drywall-repair-cost',name:'Drywall Repair Cost',icon:'🔨'},{slug:'paint-calculator',name:'Paint Calculator',icon:'🎨'},{slug:'room-measurement-guide',name:'Room Measurement Guide',icon:'📐'}],
-        'repair-outdoor':    [{slug:'deck-building-cost',name:'Deck Building Cost',icon:'🏗️'},{slug:'concrete-patio-cost',name:'Concrete Patio Cost',icon:'🏗️'},{slug:'fence-installation-cost',name:'Fence Cost',icon:'🏡'}],
-        'repair-general':    [{slug:'diy-vs-hire',name:'DIY vs. Hire Calculator',icon:'🤔'},{slug:'repair-priority',name:'Repair Priority Planner',icon:'📋'},{slug:'emergency-checklist',name:'Emergency Checklist',icon:'🚨'}],
-        'improve-kitchen':   [{slug:'kitchen-remodel-cost',name:'Kitchen Remodel Cost',icon:'🍳'},{slug:'paint-calculator',name:'Paint Calculator',icon:'🎨'},{slug:'home-value-impact',name:'Home Value Impact',icon:'📈'}],
-        'improve-bathroom':  [{slug:'bathroom-remodel-cost',name:'Bathroom Remodel Cost',icon:'🛁'},{slug:'tile-calculator',name:'Tile Calculator',icon:'🔲'},{slug:'home-value-impact',name:'Home Value Impact',icon:'📈'}],
-        'estimate-general':  [{slug:'diy-vs-hire',name:'DIY vs. Hire',icon:'🤔'},{slug:'home-value-impact',name:'Home Value Impact',icon:'📈'},{slug:'material-cost-comparison',name:'Material Comparison',icon:'📊'}],
-        'calculate-general': [{slug:'paint-calculator',name:'Paint Calculator',icon:'🎨'},{slug:'room-measurement-guide',name:'Room Measurement',icon:'📐'},{slug:'concrete-calculator',name:'Concrete Calculator',icon:'🏗️'}],
-        'maintain-general':  [{slug:'maintenance-schedule',name:'Maintenance Schedule',icon:'📅'},{slug:'seasonal-maintenance',name:'Seasonal Maintenance',icon:'🍂'},{slug:'mold-risk-assessment',name:'Mold Risk Assessment',icon:'🔬'}],
     };
 
     function calculate(e) {
         e.preventDefault();
-        const proj = document.getElementById('projectType').value;
-        const area = document.getElementById('area').value;
-        const exp = document.getElementById('experience').value;
+        const type = document.getElementById('projectType').value;
+        const level = document.getElementById('level').value;
+        const budget = document.getElementById('budget').value;
+        const project = toolDB[type];
 
-        let key = `${proj}-${area}`;
-        let tools = toolMap[key] || toolMap[`${proj}-general`] || toolMap['repair-general'];
+        let tools = [...project.basic];
+        if (level !== 'basic' || budget === 'invest') tools = [...tools, ...project.intermediate];
+        if (level === 'pro' || budget === 'invest') tools = [...tools, ...project.pro];
 
-        const expTips = {
-            beginner: 'As a beginner, start with our troubleshooters and guides before tackling repairs. Consider using the DIY vs. Hire tool.',
-            intermediate: 'With some experience, you can handle most projects with the right planning tools and cost estimates.',
-            advanced: 'As an experienced DIYer, our material calculators and cost estimators will help you plan efficiently.'
-        };
+        const listLabel = level === 'basic' ? 'Essential' : level === 'intermediate' ? 'Recommended' : 'Complete';
 
         document.getElementById('result').className = 'result-box mt-6';
         document.getElementById('result').innerHTML = `
-            <h3 class="text-2xl font-bold mb-4">Recommended Tools for You</h3>
-            <p class="text-sm mb-4">${expTips[exp]}</p>
-            <div class="space-y-3">
-                ${tools.map((t,i) => `
-                    <a href="${t.slug}.html" class="block bg-white bg-opacity-10 hover:bg-opacity-20 rounded-lg p-4 transition-all">
-                        <div class="flex items-center gap-3">
-                            <span class="text-3xl">${t.icon}</span>
-                            <div>
-                                <h4 class="font-bold">${i===0?'⭐ Best Match: ':''}${t.name}</h4>
-                                <p class="text-sm opacity-80">Click to open this tool →</p>
-                            </div>
-                        </div>
-                    </a>
-                `).join('')}
+            <h3 class="text-3xl font-bold mb-4">🔧 ${project.name} — ${listLabel} Tool List</h3>
+            <p class="mb-4 opacity-80">${tools.length} tools recommended</p>
+            <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-bold mb-2 text-yellow-200">Must-Have (${project.basic.length} items)</h4>
+                        <ul class="list-disc pl-5 space-y-1">${project.basic.map(t => `<li>${t}</li>`).join('')}</ul>
+                    </div>
+                    ${level !== 'basic' || budget === 'invest' ? `<div>
+                        <h4 class="font-bold mb-2 text-green-200">Recommended (${project.intermediate.length} items)</h4>
+                        <ul class="list-disc pl-5 space-y-1">${project.intermediate.map(t => `<li>${t}</li>`).join('')}</ul>
+                    </div>` : ''}
+                    ${level === 'pro' || budget === 'invest' ? `<div>
+                        <h4 class="font-bold mb-2 text-blue-200">Pro / Specialty (${project.pro.length} items)</h4>
+                        <ul class="list-disc pl-5 space-y-1">${project.pro.map(t => `<li>${t}</li>`).join('')}</ul>
+                    </div>` : ''}
+                </div>
             </div>
-            <p class="text-sm mt-4 opacity-70">Want to see all tools? <a href="../index.html#tools" class="underline">Browse all 50+ tools</a></p>
+            <div class="mt-4 p-3 bg-white bg-opacity-10 rounded-lg text-sm">
+                <strong>🦺 Don't forget safety gear:</strong> Safety glasses, gloves, hearing protection, dust mask, and a first aid kit.
+            </div>
         `;
     }
 
     document.getElementById('toolInterface').innerHTML = content.interface;
     document.getElementById('educationalContent').innerHTML = content.education;
-    document.getElementById('utilityForm').addEventListener('submit', calculate);
-    loadRelatedTools('utility');
+    document.getElementById('planningForm').addEventListener('submit', calculate);
+    loadRelatedTools('planning');
 })();
-
-function loadRelatedTools(category) {
-    fetch('../tools-data.json').then(r => r.json()).then(tools => {
-        const related = tools.filter(t => t.category === category).slice(0, 3);
-        document.getElementById('relatedTools').innerHTML = related.map(t => `
-            <a href="${t.slug}.html" class="tool-card block">
-                <div class="text-3xl mb-2">${t.icon}</div>
-                <h4 class="font-bold">${t.name}</h4>
-                <p class="text-sm text-gray-600">${t.desc}</p>
-            </a>
-        `).join('');
-    });
-}

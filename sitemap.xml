@@ -1,349 +1,375 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gofixr.com/</loc>
+    <loc>https://gofixr.netlify.app/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/about.html</loc>
+    <loc>https://gofixr.netlify.app/about.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/guides.html</loc>
+    <loc>https://gofixr.netlify.app/guides.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/privacy.html</loc>
+    <loc>https://gofixr.netlify.app/privacy.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/terms.html</loc>
+    <loc>https://gofixr.netlify.app/terms.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <!-- Cost Calculators -->
   <url>
-    <loc>https://gofixr.com/tools/bathroom-remodel-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/bathroom-remodel-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/kitchen-remodel-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/kitchen-remodel-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/roof-replacement-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/roof-replacement-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/hvac-replacement-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/hvac-replacement-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/flooring-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/flooring-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/painting-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/painting-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/deck-building-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/deck-building-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/fence-installation-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/fence-installation-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/siding-installation-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/siding-installation-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/window-replacement-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/window-replacement-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/garage-door-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/garage-door-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/drywall-repair-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/drywall-repair-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/plumbing-repair-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/plumbing-repair-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/electrical-work-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/electrical-work-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/concrete-patio-cost.html</loc>
+    <loc>https://gofixr.netlify.app/tools/concrete-patio-cost.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <!-- Diagnostic Tools -->
   <url>
-    <loc>https://gofixr.com/tools/toilet-troubleshooter.html</loc>
+    <loc>https://gofixr.netlify.app/tools/toilet-troubleshooter.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/water-heater-troubleshooter.html</loc>
+    <loc>https://gofixr.netlify.app/tools/water-heater-troubleshooter.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/garbage-disposal-fix.html</loc>
+    <loc>https://gofixr.netlify.app/tools/garbage-disposal-fix.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/hvac-diagnoser.html</loc>
+    <loc>https://gofixr.netlify.app/tools/hvac-diagnoser.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/electrical-diagnoser.html</loc>
+    <loc>https://gofixr.netlify.app/tools/electrical-diagnoser.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/plumbing-noise-identifier.html</loc>
+    <loc>https://gofixr.netlify.app/tools/plumbing-noise-identifier.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/roof-leak-locator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/roof-leak-locator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/foundation-crack-evaluator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/foundation-crack-evaluator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/appliance-error-codes.html</loc>
+    <loc>https://gofixr.netlify.app/tools/appliance-error-codes.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/mold-risk-assessment.html</loc>
+    <loc>https://gofixr.netlify.app/tools/mold-risk-assessment.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Planning Tools -->
   <url>
-    <loc>https://gofixr.com/tools/paint-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/paint-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/tile-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/tile-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/concrete-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/concrete-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/lumber-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/lumber-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/grout-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/grout-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/wallpaper-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/wallpaper-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/insulation-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/insulation-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/btu-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/btu-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/ladder-height-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/ladder-height-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/load-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/load-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/mulch-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/mulch-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/stain-sealer-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/stain-sealer-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <!-- Interactive Tools -->
   <url>
-    <loc>https://gofixr.com/tools/diy-vs-hire.html</loc>
+    <loc>https://gofixr.netlify.app/tools/diy-vs-hire.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/contractor-comparison.html</loc>
+    <loc>https://gofixr.netlify.app/tools/contractor-comparison.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/tool-finder-quiz.html</loc>
+    <loc>https://gofixr.netlify.app/tools/tool-finder-quiz.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/color-visualizer.html</loc>
+    <loc>https://gofixr.netlify.app/tools/color-visualizer.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/room-measurement-guide.html</loc>
+    <loc>https://gofixr.netlify.app/tools/room-measurement-guide.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/project-timeline.html</loc>
+    <loc>https://gofixr.netlify.app/tools/project-timeline.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/repair-priority.html</loc>
+    <loc>https://gofixr.netlify.app/tools/repair-priority.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/material-cost-comparison.html</loc>
+    <loc>https://gofixr.netlify.app/tools/material-cost-comparison.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/home-value-impact.html</loc>
+    <loc>https://gofixr.netlify.app/tools/home-value-impact.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/energy-savings-calculator.html</loc>
+    <loc>https://gofixr.netlify.app/tools/energy-savings-calculator.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/maintenance-schedule.html</loc>
+    <loc>https://gofixr.netlify.app/tools/maintenance-schedule.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/seasonal-maintenance.html</loc>
+    <loc>https://gofixr.netlify.app/tools/seasonal-maintenance.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/tools/emergency-checklist.html</loc>
+    <loc>https://gofixr.netlify.app/tools/emergency-checklist.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/contact.html</loc>
+    <loc>https://gofixr.netlify.app/contact.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://gofixr.com/disclaimer.html</loc>
+    <loc>https://gofixr.netlify.app/disclaimer.html</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
+
+    <url>
+        <loc>https://gofixr.netlify.app/guides/unclog-a-drain.html</loc>
+        <lastmod>2026-02-10</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://gofixr.netlify.app/guides/fix-a-leaky-faucet.html</loc>
+        <lastmod>2026-02-10</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://gofixr.netlify.app/guides/reset-circuit-breaker.html</loc>
+        <lastmod>2026-02-10</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://gofixr.netlify.app/guides/patch-drywall.html</loc>
+        <lastmod>2026-02-10</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://gofixr.netlify.app/guides/caulk-a-bathtub.html</loc>
+        <lastmod>2026-02-10</lastmod>
+        <priority>0.7</priority>
+    </url>
 </urlset>

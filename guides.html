@@ -6,11 +6,11 @@
     <title>Home Repair Guides | GoFixr</title>
     <meta name="description" content="Step-by-step home repair guides with photos, difficulty ratings, and expert tips.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="canonical" href="https://gofixr.com/guides.html">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="canonical" href="https://gofixr.netlify.app/guides.html">
+    <link rel="stylesheet" href="assets/css/tailwind-min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Home Repair Guides | GoFixr","url":"https://gofixr.com/guides.html","isPartOf":{"@type":"WebSite","name":"GoFixr","url":"https://gofixr.com"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Home Repair Guides | GoFixr","url":"https://gofixr.netlify.app/guides.html","isPartOf":{"@type":"WebSite","name":"GoFixr","url":"https://gofixr.netlify.app"}}</script>
 </head>
 <body>
     <nav class="bg-brand-blue text-white shadow-lg">
@@ -32,6 +32,11 @@
         <p class="text-xl text-gray-600 mb-12">Step-by-step instructions for common home repairs</p>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <a href="guides/fix-a-leaky-faucet.html" class="block hover:shadow-lg transition-shadow">
+            <a href="guides/reset-circuit-breaker.html" class="block hover:shadow-lg transition-shadow">
+            <a href="guides/patch-drywall.html" class="block hover:shadow-lg transition-shadow">
+            <a href="guides/caulk-a-bathtub.html" class="block hover:shadow-lg transition-shadow">
+            <a href="guides/unclog-a-drain.html" class="block hover:shadow-lg transition-shadow">
             <div class="tool-card">
                 <div class="difficulty difficulty-easy mb-3">⭐ Easy</div>
                 <h3 class="text-xl font-bold mb-2">How to Fix a Running Toilet</h3>
@@ -51,6 +56,7 @@
                     <span>💰 $0-15</span>
                 </div>
             </div>
+            </a>
 
             <div class="tool-card">
                 <div class="difficulty difficulty-easy mb-3">⭐ Easy</div>
@@ -61,6 +67,7 @@
                     <span>💰 $10-30</span>
                 </div>
             </div>
+            </a>
 
             <div class="tool-card">
                 <div class="difficulty difficulty-easy mb-3">⭐ Easy</div>
@@ -71,6 +78,7 @@
                     <span>💰 $0</span>
                 </div>
             </div>
+            </a>
 
             <div class="tool-card">
                 <div class="difficulty difficulty-medium mb-3">⭐⭐ Medium</div>
@@ -81,6 +89,7 @@
                     <span>💰 $15-40</span>
                 </div>
             </div>
+            </a>
 
             <div class="tool-card">
                 <div class="difficulty difficulty-medium mb-3">⭐⭐ Medium</div>
@@ -121,6 +130,7 @@
                     <span>💰 $5-15</span>
                 </div>
             </div>
+            </a>
         </div>
 
         <div class="mt-16 p-8 bg-blue-50 rounded-xl">
@@ -132,17 +142,38 @@
 
     <footer class="bg-brand-blue text-white mt-16 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h3 class="text-2xl font-bold mb-4"><span class="brand-orange">Go</span>Fixr</h3>
-                <p class="text-gray-300 mb-4">Your trusted home repair companion</p>
-                <div class="flex justify-center gap-6 text-sm">
-                    <a href="index.html" class="footer-link">Home</a>
-                    <a href="about.html" class="footer-link">About</a>
-                    <a href="privacy.html" class="footer-link">Privacy</a>
-                    <a href="terms.html" class="footer-link">Terms</a>
-                    <a href="contact.html" class="footer-link">Contact</a>
-                    <a href="disclaimer.html" class="footer-link">Disclaimer</a>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold brand-orange mb-4">GoFixr</h3>
+                    <p class="text-sm text-gray-300">Your trusted home repair companion. DIY guidance, cost transparency, and expert advice.</p>
                 </div>
+                <div>
+                    <h4 class="font-bold mb-3">Tools</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="tools/bathroom-remodel-cost.html" class="footer-link">Cost Calculators</a></li>
+                        <li><a href="tools/paint-calculator.html" class="footer-link">Planning Tools</a></li>
+                        <li><a href="tools/toilet-troubleshooter.html" class="footer-link">Troubleshooters</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-3">Resources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="guides.html" class="footer-link">Repair Guides</a></li>
+                        <li><a href="about.html" class="footer-link">About Us</a></li>
+                        <li><a href="contact.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-3">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="footer-link">Terms of Use</a></li>
+                        <li><a href="disclaimer.html" class="footer-link">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>\&copy; 2026 GoFixr.com - All rights reserved. Always consult a licensed professional for complex repairs.</p>
             </div>
         </div>
     </footer>
