@@ -1,0 +1,53 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout title="Lumber Calculator" description="Calculate board feet and estimate lumber costs for framing, decking, and woodworking projects." icon="🪵" category="Material Calculators" categorySlug="material-calculators">
+  <div slot="calculator">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Lumber Size</label>
+        <select id="size" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="1.5,3.5">2×4</option>
+          <option value="1.5,5.5">2×6</option>
+          <option value="1.5,7.25">2×8</option>
+          <option value="1.5,9.25">2×10</option>
+          <option value="1.5,11.25">2×12</option>
+          <option value="3.5,3.5">4×4</option>
+          <option value="0.75,3.5">1×4</option>
+          <option value="0.75,5.5">1×6</option>
+        </select>
+      </div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Length per Piece (ft)</label><input type="number" id="len" value="8" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Number of Pieces</label><input type="number" id="qty" value="10" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Price per Board Foot ($)</label><input type="number" id="price" value="3.50" min="0" step="0.01" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+    </div>
+    <button onclick="calc()" class="mt-6 bg-[#FF6B35] hover:bg-[#e55a2b] text-white font-semibold px-8 py-3 rounded-lg transition-colors w-full md:w-auto">Calculate Lumber</button>
+    <div id="result" class="mt-6 hidden"><div class="bg-[#1B4965]/5 rounded-xl p-6"><h3 class="font-bold text-[#1B4965] text-lg mb-3">Results</h3><div class="grid sm:grid-cols-3 gap-4" id="res"></div></div></div>
+  </div>
+  <Fragment slot="content">
+    <h2>What Is a Board Foot?</h2>
+    <p>A <strong>board foot</strong> is 1" thick × 12" wide × 12" long (144 cubic inches). It's the standard unit for pricing lumber. Formula: (thickness × width × length) / 144, using actual dimensions in inches.</p>
+    <h2>Common Lumber Prices (2025-2026)</h2>
+    <ul>
+      <li><strong>SPF (Spruce-Pine-Fir) 2×4</strong>: $3-5 per board foot</li>
+      <li><strong>Pressure-treated</strong>: $5-8 per board foot</li>
+      <li><strong>Cedar</strong>: $6-10 per board foot</li>
+      <li><strong>Hardwoods (oak, maple)</strong>: $8-15+ per board foot</li>
+    </ul>
+  </Fragment>
+</ToolLayout>
+<script is:inline>
+function calc(){
+  const dims=document.getElementById('size').value.split(',').map(Number);
+  const len=parseFloat(document.getElementById('len').value);
+  const qty=parseInt(document.getElementById('qty').value);
+  const price=parseFloat(document.getElementById('price').value)||0;
+  const bfPerPiece=(dims[0]*dims[1]*len*12)/144;
+  const totalBF=bfPerPiece*qty;
+  const totalLinFt=len*qty;
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('res').innerHTML=`
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${totalBF.toFixed(1)}</div><div class="text-sm text-gray-500">Board Feet</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${totalLinFt}</div><div class="text-sm text-gray-500">Linear Feet</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#2D936C]">$${(totalBF*price).toFixed(2)}</div><div class="text-sm text-gray-500">Total Cost</div></div>`;
+}
+</script>

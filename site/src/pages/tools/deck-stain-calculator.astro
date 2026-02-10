@@ -1,0 +1,50 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout title="Deck Stain & Sealer Calculator" description="Calculate how many gallons of stain or sealer you need for your deck or fence." icon="🪣" category="Material Calculators" categorySlug="material-calculators">
+  <div slot="calculator">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Deck/Fence Area (sq ft)</label><input type="number" id="area" value="300" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /><p class="text-xs text-gray-400 mt-1">Include railings: add ~50% of deck floor area</p></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Product Type</label>
+        <select id="type" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="200">Transparent Stain (~200 sq ft/gal)</option>
+          <option value="250">Semi-Transparent Stain (~250 sq ft/gal)</option>
+          <option value="300">Solid Stain (~300 sq ft/gal)</option>
+          <option value="250">Clear Sealer (~250 sq ft/gal)</option>
+        </select>
+      </div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Number of Coats</label>
+        <select id="coats" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="1">1 Coat</option>
+          <option value="2" selected>2 Coats</option>
+        </select>
+      </div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Price per Gallon ($)</label><input type="number" id="price" value="40" min="0" step="0.01" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+    </div>
+    <button onclick="calc()" class="mt-6 bg-[#FF6B35] hover:bg-[#e55a2b] text-white font-semibold px-8 py-3 rounded-lg transition-colors w-full md:w-auto">Calculate Stain Needed</button>
+    <div id="result" class="mt-6 hidden"><div class="bg-[#1B4965]/5 rounded-xl p-6"><h3 class="font-bold text-[#1B4965] text-lg mb-3">Results</h3><div class="grid sm:grid-cols-3 gap-4" id="res"></div></div></div>
+  </div>
+  <Fragment slot="content">
+    <h2>Deck Stain Coverage Rates</h2>
+    <p>Coverage varies significantly by product type and wood condition. Rough-sawn or weathered wood absorbs more stain. New smooth wood covers better.</p>
+    <ul>
+      <li><strong>Transparent stain</strong>: 150-250 sq ft/gallon — shows wood grain, least durable</li>
+      <li><strong>Semi-transparent</strong>: 200-300 sq ft/gallon — best balance of protection and appearance</li>
+      <li><strong>Solid stain</strong>: 250-400 sq ft/gallon — most coverage, hides grain</li>
+    </ul>
+  </Fragment>
+</ToolLayout>
+<script is:inline>
+function calc(){
+  const area=parseFloat(document.getElementById('area').value);
+  const coverage=parseFloat(document.getElementById('type').value);
+  const coats=parseInt(document.getElementById('coats').value);
+  const price=parseFloat(document.getElementById('price').value)||0;
+  const gallons=Math.ceil((area*coats)/coverage);
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('res').innerHTML=`
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${gallons}</div><div class="text-sm text-gray-500">Gallons Needed</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${(area*coats).toFixed(0)} ft²</div><div class="text-sm text-gray-500">Total Coverage</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#2D936C]">$${(gallons*price).toFixed(2)}</div><div class="text-sm text-gray-500">Material Cost</div></div>`;
+}
+</script>

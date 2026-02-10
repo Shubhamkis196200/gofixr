@@ -1,0 +1,37 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout title="Wallpaper Calculator" description="Calculate how many rolls of wallpaper you need for any room." icon="🖼️" category="Material Calculators" categorySlug="material-calculators">
+  <div slot="calculator">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Room Length (ft)</label><input type="number" id="rl" value="14" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Room Width (ft)</label><input type="number" id="rw" value="12" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Wall Height (ft)</label><input type="number" id="rh" value="8" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Roll Coverage (sq ft)</label><input type="number" id="rc" value="28" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /><p class="text-xs text-gray-400 mt-1">Standard single roll ≈ 28 sq ft usable</p></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Doors</label><input type="number" id="rd" value="1" min="0" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Windows</label><input type="number" id="rwn" value="2" min="0" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Price per Roll ($)</label><input type="number" id="rp" value="35" min="0" step="0.01" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+    </div>
+    <button onclick="calc()" class="mt-6 bg-[#FF6B35] hover:bg-[#e55a2b] text-white font-semibold px-8 py-3 rounded-lg transition-colors w-full md:w-auto">Calculate Rolls Needed</button>
+    <div id="result" class="mt-6 hidden"><div class="bg-[#1B4965]/5 rounded-xl p-6"><h3 class="font-bold text-[#1B4965] text-lg mb-3">Results</h3><div class="grid sm:grid-cols-3 gap-4" id="res"></div></div></div>
+  </div>
+  <Fragment slot="content">
+    <h2>How to Calculate Wallpaper</h2>
+    <p>A standard American single roll covers about 36 sq ft, but after accounting for pattern matching and trimming, usable coverage is roughly <strong>28 sq ft</strong>. European rolls differ — always check your roll dimensions.</p>
+    <p>Wallpaper with large repeat patterns wastes more material. Add 15-20% for large patterns.</p>
+  </Fragment>
+</ToolLayout>
+<script is:inline>
+function calc(){
+  const perimeter=2*(parseFloat(document.getElementById('rl').value)+parseFloat(document.getElementById('rw').value));
+  const h=parseFloat(document.getElementById('rh').value);const wallArea=perimeter*h;
+  const subtract=parseInt(document.getElementById('rd').value)*21+parseInt(document.getElementById('rwn').value)*15;
+  const netArea=wallArea-subtract;const coverage=parseFloat(document.getElementById('rc').value);
+  const rolls=Math.ceil(netArea/coverage);const price=parseFloat(document.getElementById('rp').value)||0;
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('res').innerHTML=`
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${rolls}</div><div class="text-sm text-gray-500">Rolls Needed</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${netArea.toFixed(0)} ft²</div><div class="text-sm text-gray-500">Wall Area</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#2D936C]">$${(rolls*price).toFixed(2)}</div><div class="text-sm text-gray-500">Total Cost</div></div>`;
+}
+</script>

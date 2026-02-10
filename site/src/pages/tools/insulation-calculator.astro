@@ -1,0 +1,67 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout title="Insulation Calculator" description="Calculate how much insulation you need based on climate zone and R-value requirements." icon="🧊" category="Material Calculators" categorySlug="material-calculators">
+  <div slot="calculator">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Climate Zone</label>
+        <select id="zone" onchange="updateR()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="1">Zone 1 (Hot — Miami, Hawaii)</option>
+          <option value="2">Zone 2 (Hot — Houston, Phoenix)</option>
+          <option value="3">Zone 3 (Warm — Atlanta, Dallas)</option>
+          <option value="4" selected>Zone 4 (Mixed — NYC, Seattle)</option>
+          <option value="5">Zone 5 (Cold — Chicago, Denver)</option>
+          <option value="6">Zone 6 (Cold — Minneapolis, Burlington)</option>
+          <option value="7">Zone 7 (Very Cold — Duluth, Anchorage)</option>
+        </select>
+      </div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Area to Insulate</label>
+        <select id="area" onchange="updateR()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="attic">Attic / Ceiling</option>
+          <option value="wall">Exterior Walls</option>
+          <option value="floor">Floor / Crawl Space</option>
+        </select>
+      </div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Recommended R-Value</label><input type="number" id="rval" value="49" class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-gray-50" readonly /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Area (sq ft)</label><input type="number" id="sqft" value="1000" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Insulation Type</label>
+        <select id="type" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="3.2">Fiberglass Batt (R-3.2/inch)</option>
+          <option value="3.7">Blown-in Fiberglass (R-3.7/inch)</option>
+          <option value="3.5">Cellulose (R-3.5/inch)</option>
+          <option value="6.5">Spray Foam - Closed Cell (R-6.5/inch)</option>
+          <option value="3.6">Spray Foam - Open Cell (R-3.6/inch)</option>
+          <option value="5.0">Rigid Foam Board (R-5/inch)</option>
+        </select>
+      </div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Cost per sq ft ($)</label><input type="number" id="cost" value="1.50" min="0" step="0.01" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+    </div>
+    <button onclick="calc()" class="mt-6 bg-[#FF6B35] hover:bg-[#e55a2b] text-white font-semibold px-8 py-3 rounded-lg transition-colors w-full md:w-auto">Calculate Insulation</button>
+    <div id="result" class="mt-6 hidden"><div class="bg-[#1B4965]/5 rounded-xl p-6"><h3 class="font-bold text-[#1B4965] text-lg mb-3">Results</h3><div class="grid sm:grid-cols-3 gap-4" id="res"></div></div></div>
+  </div>
+  <Fragment slot="content">
+    <h2>Understanding R-Value</h2>
+    <p>R-value measures insulation's resistance to heat flow. Higher R-value = better insulation. The <strong>Department of Energy</strong> recommends different R-values based on climate zone and area of the home.</p>
+    <h2>Insulation Types Compared</h2>
+    <ul>
+      <li><strong>Fiberglass batts</strong>: Cheapest, DIY-friendly, R-3.2 per inch</li>
+      <li><strong>Blown-in</strong>: Great for attics, fills gaps well, R-3.5-3.7 per inch</li>
+      <li><strong>Spray foam (closed cell)</strong>: Best R-value (R-6.5/inch), moisture barrier, most expensive</li>
+      <li><strong>Rigid foam board</strong>: R-5/inch, good for basement walls</li>
+    </ul>
+  </Fragment>
+</ToolLayout>
+<script is:inline>
+const rValues={1:{attic:30,wall:13,floor:13},2:{attic:38,wall:13,floor:13},3:{attic:38,wall:20,floor:25},4:{attic:49,wall:20,floor:25},5:{attic:49,wall:20,floor:25},6:{attic:60,wall:21,floor:30},7:{attic:60,wall:21,floor:30}};
+function updateR(){const z=document.getElementById('zone').value;const a=document.getElementById('area').value;document.getElementById('rval').value=rValues[z][a];}
+function calc(){
+  const rval=parseFloat(document.getElementById('rval').value);const sqft=parseFloat(document.getElementById('sqft').value);
+  const rPerInch=parseFloat(document.getElementById('type').value);const costSqFt=parseFloat(document.getElementById('cost').value)||0;
+  const inches=Math.ceil(rval/rPerInch);const totalCost=(sqft*costSqFt).toFixed(2);
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('res').innerHTML=`
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">R-${rval}</div><div class="text-sm text-gray-500">Target R-Value</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${inches}"</div><div class="text-sm text-gray-500">Thickness Needed</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#2D936C]">$${totalCost}</div><div class="text-sm text-gray-500">Est. Material Cost</div></div>`;
+}
+</script>

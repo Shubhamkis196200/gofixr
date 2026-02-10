@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Lighting Calculator | GoFixr</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#4A4A4A;background:#FAFAFA}.container{max-width:1000px;margin:0 auto;padding:20px}header{background:#1B4965;color:white;padding:1rem 0;margin-bottom:2rem}nav{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;padding:0 20px}.logo{font-size:1.8rem;font-weight:bold;color:#FF6B35}nav ul{display:flex;list-style:none;gap:2rem}nav a{color:white;text-decoration:none}h1{color:#1B4965;margin-bottom:1rem}.calculator{background:white;padding:2rem;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1)}.form-group{margin-bottom:1.5rem}label{display:block;margin-bottom:.5rem;font-weight:600;color:#1B4965}input,select{width:100%;padding:.75rem;border:2px solid #E8E8E8;border-radius:5px;font-size:1rem}button{width:100%;background:#FF6B35;color:white;padding:1rem;border:none;border-radius:5px;font-weight:bold;cursor:pointer}.results{background:#f0f8ff;padding:2rem;border-radius:10px;margin-top:2rem;display:none}.results.show{display:block}.result-item{padding:1rem;background:white;border-radius:5px;border-left:4px solid #FF6B35}footer{background:#1B4965;color:white;padding:2rem 0;text-align:center;margin-top:4rem}</style>
+</head>
+<body>
+<header><nav><div class="logo">GoFixr</div><ul><li><a href="../index.html">Home</a></li><li><a href="index.html">Tools</a></li></ul></nav></header>
+<div class="container"><h1>💡 Lighting Calculator</h1>
+<div class="calculator"><form id="calc">
+<div class="form-group"><label>Room Length (feet)</label><input type="number" id="length" value="15" min="5"></div>
+<div class="form-group"><label>Room Width (feet)</label><input type="number" id="width" value="12" min="5"></div>
+<div class="form-group"><label>Room Type</label><select id="type">
+<option value="10">Bedroom/Living Room (10 lumens/sq ft)</option>
+<option value="20" selected>Dining Room (20 lumens/sq ft)</option>
+<option value="30">Kitchen (30 lumens/sq ft)</option>
+<option value="40">Bathroom (40 lumens/sq ft)</option>
+<option value="50">Office/Task Areas (50 lumens/sq ft)</option>
+</select></div>
+<div class="form-group"><label>Bulb Type</label><select id="bulb">
+<option value="800">LED (800 lumens each)</option>
+<option value="1100">Bright LED (1100 lumens)</option>
+<option value="1600" selected>Very Bright LED (1600 lumens)</option>
+</select></div>
+<button type="submit">Calculate Lighting Needed</button>
+</form>
+<div id="results" class="results"><div class="result-item"><strong>Lighting Recommendation:</strong><p id="result"></p></div></div>
+</div></div>
+<footer><p>&copy; 2026 GoFixr</p></footer>
+<script>
+document.getElementById('calc').addEventListener('submit',function(e){
+e.preventDefault();
+const length=parseFloat(document.getElementById('length').value);
+const width=parseFloat(document.getElementById('width').value);
+const lumensPerSqFt=parseInt(document.getElementById('type').value);
+const lumensPerBulb=parseInt(document.getElementById('bulb').value);
+const area=length*width;
+const totalLumens=area*lumensPerSqFt;
+const bulbsNeeded=Math.ceil(totalLumens/lumensPerBulb);
+document.getElementById('result').innerHTML=`<span style="font-size:2rem;color:#FF6B35">${bulbsNeeded} bulbs/fixtures</span><br><small>${area} sq ft room needs ${totalLumens.toLocaleString()} total lumens</small><br><br>Consider mixing ceiling lights, task lighting, and accent lights for best results.`;
+document.getElementById('results').classList.add('show');
+});
+</script>
+</body>
+</html>

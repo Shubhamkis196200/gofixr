@@ -1,0 +1,53 @@
+/* GoFixr Custom Styles */
+:root {
+  --orange: #FF6B35;
+  --blue: #1B4965;
+  --white: #FAFAFA;
+  --gray: #4A4A4A;
+  --green: #2D936C;
+  --red: #D64045;
+  --light-gray: #E8E8E8;
+  --orange-hover: #e55a25;
+  --blue-dark: #143a52;
+}
+body { font-family: 'Inter', system-ui, sans-serif; color: var(--gray); background: var(--white); }
+.brand-orange { color: var(--orange); }
+.brand-blue { color: var(--blue); }
+.bg-brand-orange { background-color: var(--orange); }
+.bg-brand-blue { background-color: var(--blue); }
+.bg-brand-light { background-color: var(--light-gray); }
+.btn-primary { background: var(--orange); color: #fff; padding: 12px 28px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 1rem; transition: background .2s; }
+.btn-primary:hover { background: var(--orange-hover); }
+.btn-secondary { background: var(--blue); color: #fff; padding: 10px 24px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: .95rem; transition: background .2s; }
+.btn-secondary:hover { background: var(--blue-dark); }
+.tool-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.08); padding: 24px; transition: transform .2s, box-shadow .2s; }
+.tool-card:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(0,0,0,.12); }
+.result-box { background: linear-gradient(135deg, #1B4965 0%, #2d6a8a 100%); color: #fff; border-radius: 12px; padding: 24px; margin: 20px 0; }
+.result-box h3 { color: #fff; }
+.input-group { margin-bottom: 16px; }
+.input-group label { display: block; font-weight: 600; margin-bottom: 6px; color: var(--blue); font-size: .9rem; }
+.input-group input, .input-group select { width: 100%; padding: 10px 14px; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 1rem; transition: border-color .2s; }
+.input-group input:focus, .input-group select:focus { border-color: var(--orange); outline: none; }
+.warning-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 16px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+.danger-box { background: #f8d7da; border-left: 4px solid var(--red); padding: 16px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+.pro-tip { background: #d4edda; border-left: 4px solid var(--green); padding: 16px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+.difficulty { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 20px; font-size: .85rem; font-weight: 600; }
+.difficulty-easy { background: #d4edda; color: #155724; }
+.difficulty-medium { background: #fff3cd; color: #856404; }
+.difficulty-hard { background: #f8d7da; color: #721c24; }
+.nav-link { color: rgba(255,255,255,.85); text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all .2s; }
+.nav-link:hover { color: #fff; background: rgba(255,255,255,.1); }
+.footer-link { color: rgba(255,255,255,.7); text-decoration: none; transition: color .2s; }
+.footer-link:hover { color: #fff; }
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+@media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; } }
+.category-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+.cat-cost { background: #dbeafe; color: #1e40af; }
+.cat-planning { background: #fef3c7; color: #92400e; }
+.cat-diagnostic { background: #fce7f3; color: #9d174d; }
+.cat-utility { background: #d1fae5; color: #065f46; }
+.hero-search { max-width: 600px; margin: 0 auto; position: relative; }
+.hero-search input { width: 100%; padding: 16px 24px; padding-right: 56px; border-radius: 50px; border: 3px solid rgba(255,255,255,.3); background: rgba(255,255,255,.15); color: #fff; font-size: 1.1rem; backdrop-filter: blur(10px); }
+.hero-search input::placeholder { color: rgba(255,255,255,.6); }
+.hero-search input:focus { outline: none; border-color: var(--orange); background: rgba(255,255,255,.2); }
+.hero-search button { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: var(--orange); border: none; border-radius: 50%; width: 40px; height: 40px; color: #fff; cursor: pointer; font-size: 1.1rem; }

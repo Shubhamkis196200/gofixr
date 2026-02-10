@@ -1,0 +1,52 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout title="Concrete Calculator" description="Calculate cubic yards of concrete needed for slabs, footings, columns, and stairs." icon="🧱" category="Material Calculators" categorySlug="material-calculators">
+  <div slot="calculator">
+    <div class="mb-4"><label class="block text-sm font-semibold text-[#1B4965] mb-1">Project Type</label>
+      <select id="type" onchange="toggleFields()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+        <option value="slab">Slab / Patio / Sidewalk</option>
+        <option value="footing">Footing / Foundation Wall</option>
+        <option value="column">Column / Post Hole</option>
+      </select>
+    </div>
+    <div id="slab-fields" class="grid md:grid-cols-3 gap-6">
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Length (ft)</label><input type="number" id="sL" value="10" min="0.1" step="0.1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Width (ft)</label><input type="number" id="sW" value="10" min="0.1" step="0.1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Thickness (inches)</label><input type="number" id="sT" value="4" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+    </div>
+    <div id="column-fields" class="grid md:grid-cols-2 gap-6 hidden">
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Diameter (inches)</label><input type="number" id="cD" value="12" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Depth (ft)</label><input type="number" id="cH" value="3" min="0.5" step="0.5" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Number of Holes</label><input type="number" id="cN" value="4" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+    </div>
+    <div class="mt-4"><label class="block text-sm font-semibold text-[#1B4965] mb-1">Price per Cubic Yard ($)</label><input type="number" id="price" value="130" min="0" class="w-full md:w-48 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+    <button onclick="calc()" class="mt-6 bg-[#FF6B35] hover:bg-[#e55a2b] text-white font-semibold px-8 py-3 rounded-lg transition-colors w-full md:w-auto">Calculate Concrete</button>
+    <div id="result" class="mt-6 hidden"><div class="bg-[#1B4965]/5 rounded-xl p-6"><h3 class="font-bold text-[#1B4965] text-lg mb-3">Results</h3><div class="grid sm:grid-cols-3 gap-4" id="res"></div></div></div>
+  </div>
+  <Fragment slot="content">
+    <h2>How to Calculate Concrete</h2>
+    <p>Concrete is ordered by the cubic yard. One cubic yard = 27 cubic feet. For a standard 4" slab, one cubic yard covers about 81 square feet.</p>
+    <p>Always order <strong>5-10% extra</strong> for waste, spillage, and uneven ground. Ready-mix trucks typically deliver in half-yard increments.</p>
+    <h2>Concrete Costs</h2>
+    <ul>
+      <li><strong>Ready-mix delivery</strong>: $110-150 per cubic yard</li>
+      <li><strong>Bags (80 lb)</strong>: ~$5-6 each, 0.6 cu ft per bag — only economical for very small jobs</li>
+      <li><strong>Short-load fee</strong>: $50-100 if ordering less than 3 yards</li>
+    </ul>
+  </Fragment>
+</ToolLayout>
+<script is:inline>
+function toggleFields(){const t=document.getElementById('type').value;document.getElementById('slab-fields').classList.toggle('hidden',t==='column');document.getElementById('column-fields').classList.toggle('hidden',t!=='column');}
+function calc(){
+  const t=document.getElementById('type').value;const price=parseFloat(document.getElementById('price').value)||0;let cy=0;
+  if(t==='column'){const d=parseFloat(document.getElementById('cD').value)/12;const h=parseFloat(document.getElementById('cH').value);const n=parseInt(document.getElementById('cN').value);cy=n*Math.PI*Math.pow(d/2,2)*h/27;}
+  else{const l=parseFloat(document.getElementById('sL').value);const w=parseFloat(document.getElementById('sW').value);const th=parseFloat(document.getElementById('sT').value)/12;cy=l*w*th/27;}
+  const bags80=Math.ceil(cy*27/0.6);const cost=(cy*price).toFixed(2);const cyPlus10=(cy*1.1).toFixed(2);
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('res').innerHTML=`
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${cy.toFixed(2)}</div><div class="text-sm text-gray-500">Cubic Yards</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${bags80}</div><div class="text-sm text-gray-500">80lb Bags</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#2D936C]">$${cost}</div><div class="text-sm text-gray-500">Est. Cost (${cyPlus10} yd³ w/10%)</div></div>`;
+}
+</script>

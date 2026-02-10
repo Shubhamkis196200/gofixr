@@ -1,0 +1,66 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout title="Kitchen Remodel Cost Estimator" description="Estimate kitchen renovation costs based on size, cabinets, countertops, and scope of work." icon="🍳" category="Cost Estimators" categorySlug="cost-estimators">
+  <div slot="calculator">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Kitchen Size</label>
+        <select id="size" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="small">Small (under 70 sq ft)</option>
+          <option value="medium" selected>Medium (70-150 sq ft)</option>
+          <option value="large">Large (150-250 sq ft)</option>
+          <option value="xlarge">Extra Large (250+ sq ft)</option>
+        </select>
+      </div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Finish Level</label>
+        <select id="level" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="budget">Budget (stock cabinets, laminate)</option>
+          <option value="mid" selected>Mid-Range (semi-custom, quartz)</option>
+          <option value="high">High-End (custom cabinets, stone)</option>
+          <option value="luxury">Luxury (designer, top appliances)</option>
+        </select>
+      </div>
+      <div class="md:col-span-2"><label class="block text-sm font-semibold text-[#1B4965] mb-1">Include</label>
+        <div class="grid grid-cols-2 gap-2 mt-1">
+          <label class="flex items-center gap-2"><input type="checkbox" id="cabinets" checked class="rounded text-[#FF6B35]" /><span class="text-sm">New cabinets</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="counters" checked class="rounded text-[#FF6B35]" /><span class="text-sm">Countertops</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="flooring" checked class="rounded text-[#FF6B35]" /><span class="text-sm">Flooring</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="appliances" checked class="rounded text-[#FF6B35]" /><span class="text-sm">Appliances</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="backsplash" class="rounded text-[#FF6B35]" /><span class="text-sm">Backsplash</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="plumbing" class="rounded text-[#FF6B35]" /><span class="text-sm">Plumbing changes</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="electrical" class="rounded text-[#FF6B35]" /><span class="text-sm">Electrical updates</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="layout" class="rounded text-[#FF6B35]" /><span class="text-sm">Layout changes (walls)</span></label>
+        </div>
+      </div>
+    </div>
+    <button onclick="calc()" class="mt-6 bg-[#FF6B35] hover:bg-[#e55a2b] text-white font-semibold px-8 py-3 rounded-lg transition-colors w-full md:w-auto">Estimate Cost</button>
+    <div id="result" class="mt-6 hidden"><div class="bg-[#1B4965]/5 rounded-xl p-6"><h3 class="font-bold text-[#1B4965] text-lg mb-3">Estimated Kitchen Remodel Cost</h3><div id="res"></div></div></div>
+  </div>
+  <Fragment slot="content">
+    <h2>Average Kitchen Remodel Costs</h2>
+    <p>Kitchen remodels are the most expensive home renovation. The national average is <strong>$25,000-$50,000</strong> for a mid-range remodel. Budget updates start around $10,000; luxury remodels can exceed $100,000.</p>
+    <h2>Where the Money Goes</h2>
+    <ul>
+      <li><strong>Cabinets</strong>: 25-35% of budget — the single biggest expense</li>
+      <li><strong>Labor</strong>: 20-30%</li>
+      <li><strong>Appliances</strong>: 10-15%</li>
+      <li><strong>Countertops</strong>: 10-15%</li>
+      <li><strong>Flooring</strong>: 5-10%</li>
+    </ul>
+  </Fragment>
+</ToolLayout>
+<script is:inline>
+function calc(){
+  const sm={small:0.6,medium:1,large:1.5,xlarge:2.1};
+  const lc={budget:{base:5000,cabinets:3000,counters:1500,flooring:1000,appliances:2000,backsplash:500,plumbing:1500,electrical:1000,layout:3000},mid:{base:10000,cabinets:8000,counters:4000,flooring:2500,appliances:5000,backsplash:1500,plumbing:3000,electrical:2000,layout:6000},high:{base:18000,cabinets:18000,counters:8000,flooring:5000,appliances:10000,backsplash:3000,plumbing:5000,electrical:4000,layout:10000},luxury:{base:30000,cabinets:35000,counters:15000,flooring:8000,appliances:20000,backsplash:5000,plumbing:8000,electrical:6000,layout:15000}};
+  const s=document.getElementById('size').value;const l=document.getElementById('level').value;const c=lc[l];const m=sm[s];
+  let total=c.base*m;const items=[{name:'Base (demo, prep, labor)',cost:c.base*m}];
+  ['cabinets','counters','flooring','appliances','backsplash','plumbing','electrical','layout'].forEach(k=>{
+    if(document.getElementById(k).checked){const cost=k==='appliances'?c[k]:c[k]*m;total+=cost;items.push({name:k.charAt(0).toUpperCase()+k.slice(1),cost});}
+  });
+  const low=Math.round(total*0.85);const high=Math.round(total*1.15);
+  let html=`<div class="text-center mb-6"><div class="text-4xl font-bold text-[#FF6B35]">$${low.toLocaleString()} – $${high.toLocaleString()}</div><div class="text-sm text-gray-500 mt-1">Estimated total range</div></div><div class="space-y-2">`;
+  items.forEach(i=>{html+=`<div class="flex justify-between text-sm"><span>${i.name}</span><span class="font-semibold">$${Math.round(i.cost).toLocaleString()}</span></div>`;});
+  html+=`</div>`;document.getElementById('result').classList.remove('hidden');document.getElementById('res').innerHTML=html;
+}
+</script>

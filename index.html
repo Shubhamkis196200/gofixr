@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoFixr - Your Home Repair Companion | DIY Guides & Cost Calculators</title>
+    <meta name="description" content="Free home repair tools, cost calculators, and DIY guides. Diagnose problems, estimate costs, and decide whether to DIY or hire a professional.">
+    <meta property="og:title" content="GoFixr - Home Repair Tools & Calculators">
+    <meta property="og:description" content="50+ free tools for homeowners. Cost calculators, troubleshooters, and material planners.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gofixr.com">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #1B4965 0%, #2d6a8a 50%, #3d8aa9 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-brand-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold">
+                        <span class="brand-orange">Go</span><span class="text-white">Fixr</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-1">
+                    <a href="#tools" class="nav-link">Tools</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobileMenu" class="hidden md:hidden border-t border-gray-600 pb-4">
+                <a href="#tools" class="block px-4 py-2 text-sm hover:bg-gray-700 rounded">Tools</a>
+                <a href="guides.html" class="block px-4 py-2 text-sm hover:bg-gray-700 rounded">Guides</a>
+                <a href="about.html" class="block px-4 py-2 text-sm hover:bg-gray-700 rounded">About</a>
+                <a href="about.html#contact" class="block px-4 py-2 text-sm hover:bg-gray-700 rounded">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-6xl font-black mb-6">
+                The WebMD for Your Home
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-100 max-w-3xl mx-auto">
+                Diagnose problems, estimate costs, and decide whether to DIY or hire a pro — all for free.
+            </p>
+            
+            <!-- Search Bar -->
+            <div class="hero-search mb-8">
+                <input 
+                    type="text" 
+                    id="heroSearch" 
+                    placeholder="What needs fixing? (e.g., 'leaky faucet', 'roof cost')"
+                    aria-label="Search for home repair help"
+                >
+                <button aria-label="Search" onclick="searchTools()">🔍</button>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#tools" class="btn-primary text-lg">Browse All Tools</a>
+                <a href="guides.html" class="btn-secondary text-lg">View Repair Guides</a>
+            </div>
+            
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="text-4xl font-bold brand-orange">50+</div>
+                    <div class="text-sm text-gray-200">Free Tools</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold brand-orange">100%</div>
+                    <div class="text-sm text-gray-200">Free to Use</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold brand-orange">0</div>
+                    <div class="text-sm text-gray-200">Signup Required</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold brand-orange">24/7</div>
+                    <div class="text-sm text-gray-200">Always Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Tools Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12">Most Popular Tools</h2>
+            <div class="tool-grid">
+                <a href="tools/bathroom-remodel-cost.html" class="tool-card">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-4xl">🚿</span>
+                        <div>
+                            <span class="category-badge cat-cost">Cost Estimator</span>
+                            <h3 class="font-bold text-xl mt-1">Bathroom Remodel Cost</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Estimate bathroom renovation costs with detailed breakdowns.</p>
+                </a>
+                
+                <a href="tools/paint-calculator.html" class="tool-card">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-4xl">🎨</span>
+                        <div>
+                            <span class="category-badge cat-planning">Planning</span>
+                            <h3 class="font-bold text-xl mt-1">Paint Calculator</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Calculate exactly how much paint you need for any room.</p>
+                </a>
+                
+                <a href="tools/toilet-troubleshooter.html" class="tool-card">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-4xl">🚽</span>
+                        <div>
+                            <span class="category-badge cat-diagnostic">Diagnostic</span>
+                            <h3 class="font-bold text-xl mt-1">Toilet Troubleshooter</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Diagnose toilet problems and get step-by-step fixes.</p>
+                </a>
+                
+                <a href="tools/roof-replacement-cost.html" class="tool-card">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-4xl">🏠</span>
+                        <div>
+                            <span class="category-badge cat-cost">Cost Estimator</span>
+                            <h3 class="font-bold text-xl mt-1">Roof Replacement Cost</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Estimate roof replacement costs by size and material.</p>
+                </a>
+                
+                <a href="tools/hvac-replacement-cost.html" class="tool-card">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-4xl">❄️</span>
+                        <div>
+                            <span class="category-badge cat-cost">Cost Estimator</span>
+                            <h3 class="font-bold text-xl mt-1">HVAC Replacement Cost</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Calculate HVAC system replacement costs and energy savings.</p>
+                </a>
+                
+                <a href="tools/diy-vs-hire.html" class="tool-card">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-4xl">🤔</span>
+                        <div>
+                            <span class="category-badge cat-planning">Planning</span>
+                            <h3 class="font-bold text-xl mt-1">DIY vs Hire a Pro</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Decide whether to DIY or hire based on cost and complexity.</p>
+                </a>
+            </div>
+            <div class="text-center mt-8">
+                <a href="#tools" class="btn-secondary">View All 50+ Tools</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Tools Section -->
+    <section id="tools" class="py-16 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-4">All Tools</h2>
+            <p class="text-center text-gray-600 mb-8">Browse our complete collection of home repair tools</p>
+            
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
+                <button class="category-filter active" data-category="all">All Tools</button>
+                <button class="category-filter" data-category="cost">Cost Calculators</button>
+                <button class="category-filter" data-category="planning">Planning Tools</button>
+                <button class="category-filter" data-category="diagnostic">Troubleshooters</button>
+                <button class="category-filter" data-category="utility">Utility Tools</button>
+            </div>
+            
+            <div id="toolsGrid" class="tool-grid"></div>
+        </div>
+    </section>
+
+    <!-- Why GoFixr Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12">Why Choose GoFixr?</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">🎯</div>
+                    <h3 class="text-2xl font-bold mb-3">Diagnosis First</h3>
+                    <p class="text-gray-600">Start with symptoms, not solutions. Our troubleshooters guide you to the right fix.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">💰</div>
+                    <h3 class="text-2xl font-bold mb-3">Cost Transparency</h3>
+                    <p class="text-gray-600">Real costs upfront. No "get a quote" walls. Know what to expect before you call.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">🛠️</div>
+                    <h3 class="text-2xl font-bold mb-3">Honest Guidance</h3>
+                    <p class="text-gray-600">We tell you when to DIY and when to call a pro. Your safety comes first.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="hero-gradient text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-4">Ready to Fix Your Home?</h2>
+            <p class="text-xl mb-8">Start with our most popular tools or browse the complete collection.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#tools" class="btn-primary text-lg">Browse All Tools</a>
+                <a href="guides.html" class="bg-white text-blue-900 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">Read Repair Guides</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-blue text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4"><span class="brand-orange">Go</span>Fixr</h3>
+                    <p class="text-sm text-gray-300">Your trusted home repair companion. DIY guidance, cost transparency, and expert advice.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-3">Cost Calculators</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="tools/bathroom-remodel-cost.html" class="footer-link">Bathroom Remodel</a></li>
+                        <li><a href="tools/kitchen-remodel-cost.html" class="footer-link">Kitchen Remodel</a></li>
+                        <li><a href="tools/roof-replacement-cost.html" class="footer-link">Roof Replacement</a></li>
+                        <li><a href="tools/hvac-replacement-cost.html" class="footer-link">HVAC Replacement</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-3">Popular Tools</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="tools/paint-calculator.html" class="footer-link">Paint Calculator</a></li>
+                        <li><a href="tools/tile-calculator.html" class="footer-link">Tile Calculator</a></li>
+                        <li><a href="tools/toilet-troubleshooter.html" class="footer-link">Toilet Troubleshooter</a></li>
+                        <li><a href="tools/diy-vs-hire.html" class="footer-link">DIY vs Hire</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-3">Resources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="guides.html" class="footer-link">Repair Guides</a></li>
+                        <li><a href="about.html" class="footer-link">About Us</a></li>
+                        <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="footer-link">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2026 GoFixr.com - All rights reserved</p>
+                <p class="mt-2">Always consult licensed professionals for complex repairs. This site provides estimates and guidance only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Load and display all tools
+        fetch('tools-data.json')
+            .then(r => r.json())
+            .then(tools => {
+                window.allTools = tools;
+                displayTools(tools);
+                setupFilters();
+            });
+
+        function displayTools(tools) {
+            const grid = document.getElementById('toolsGrid');
+            const catColors = {
+                cost: 'cat-cost',
+                planning: 'cat-planning',
+                diagnostic: 'cat-diagnostic',
+                utility: 'cat-utility'
+            };
+            const catNames = {
+                cost: 'Cost Estimator',
+                planning: 'Planning',
+                diagnostic: 'Diagnostic',
+                utility: 'Utility'
+            };
+            
+            grid.innerHTML = tools.map(t => `
+                <a href="tools/${t.slug}.html" class="tool-card">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-3xl">${t.icon}</span>
+                        <div class="flex-1">
+                            <span class="category-badge ${catColors[t.category]}">${catNames[t.category]}</span>
+                            <h3 class="font-bold text-lg mt-1">${t.name}</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600">${t.desc}</p>
+                </a>
+            `).join('');
+        }
+
+        function setupFilters() {
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.category-filter').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const category = btn.dataset.category;
+                    const filtered = category === 'all' 
+                        ? window.allTools 
+                        : window.allTools.filter(t => t.category === category);
+                    displayTools(filtered);
+                });
+            });
+        }
+
+        function searchTools() {
+            const query = document.getElementById('heroSearch').value.toLowerCase();
+            if (!query) {
+                window.location.hash = 'tools';
+                return;
+            }
+            
+            const filtered = window.allTools.filter(t => 
+                t.name.toLowerCase().includes(query) || 
+                t.desc.toLowerCase().includes(query)
+            );
+            
+            displayTools(filtered);
+            window.location.hash = 'tools';
+        }
+
+        // Search on Enter key
+        document.getElementById('heroSearch').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchTools();
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+    <style>
+        .category-filter {
+            padding: 8px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--light-gray);
+            background: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .category-filter:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+        .category-filter.active {
+            background: var(--orange);
+            color: white;
+            border-color: var(--orange);
+        }
+    </style>
+</body>
+</html>

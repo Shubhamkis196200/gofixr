@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gofixr.com/sitemap-index.xml

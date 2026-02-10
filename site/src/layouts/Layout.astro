@@ -1,0 +1,91 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+}
+const { title, description = 'Free home repair calculators, cost estimators, and DIY tools. The WebMD for your home.', canonical } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} | GoFixr</title>
+  <meta name="description" content={description} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:title" content={`${title} | GoFixr`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body class="min-h-screen bg-white text-brand-gray flex flex-col">
+  <nav class="bg-brand-blue text-white sticky top-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="text-2xl font-bold">Go<span class="text-brand-orange">Fixr</span></a>
+      <div class="hidden md:flex gap-6 text-sm font-medium">
+        <a href="/" class="hover:text-brand-orange transition">Home</a>
+        <a href="/tools" class="hover:text-brand-orange transition">All Tools</a>
+        <a href="/about" class="hover:text-brand-orange transition">About</a>
+        <a href="/contact" class="hover:text-brand-orange transition">Contact</a>
+      </div>
+      <button id="mobile-menu-btn" class="md:hidden text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-3 space-y-2">
+      <a href="/" class="block hover:text-brand-orange">Home</a>
+      <a href="/tools" class="block hover:text-brand-orange">All Tools</a>
+      <a href="/about" class="block hover:text-brand-orange">About</a>
+      <a href="/contact" class="block hover:text-brand-orange">Contact</a>
+    </div>
+  </nav>
+  <main class="flex-1">
+    <slot />
+  </main>
+  <footer class="bg-brand-blue text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-xl font-bold mb-3">Go<span class="text-brand-orange">Fixr</span></h3>
+        <p class="text-sm text-gray-300">The WebMD for your home. Free tools, honest costs, real solutions.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-3">Cost Estimators</h4>
+        <ul class="text-sm text-gray-300 space-y-1">
+          <li><a href="/tools/bathroom-remodel-cost" class="hover:text-brand-orange">Bathroom Remodel</a></li>
+          <li><a href="/tools/kitchen-remodel-cost" class="hover:text-brand-orange">Kitchen Remodel</a></li>
+          <li><a href="/tools/roof-replacement-cost" class="hover:text-brand-orange">Roof Replacement</a></li>
+          <li><a href="/tools/painting-cost" class="hover:text-brand-orange">Painting Cost</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-3">DIY Tools</h4>
+        <ul class="text-sm text-gray-300 space-y-1">
+          <li><a href="/tools/paint-calculator" class="hover:text-brand-orange">Paint Calculator</a></li>
+          <li><a href="/tools/tile-calculator" class="hover:text-brand-orange">Tile Calculator</a></li>
+          <li><a href="/tools/concrete-calculator" class="hover:text-brand-orange">Concrete Calculator</a></li>
+          <li><a href="/tools/mulch-calculator" class="hover:text-brand-orange">Mulch Calculator</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-3">Troubleshooters</h4>
+        <ul class="text-sm text-gray-300 space-y-1">
+          <li><a href="/tools/toilet-troubleshooter" class="hover:text-brand-orange">Toilet Troubleshooter</a></li>
+          <li><a href="/tools/hvac-problem-diagnoser" class="hover:text-brand-orange">HVAC Diagnoser</a></li>
+          <li><a href="/tools/water-heater-troubleshooter" class="hover:text-brand-orange">Water Heater</a></li>
+          <li><a href="/tools/electrical-problem-diagnoser" class="hover:text-brand-orange">Electrical Issues</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 mt-8 pt-8 border-t border-gray-600 text-center text-sm text-gray-400">
+      <p>&copy; 2026 GoFixr. All rights reserved. For informational purposes only. Always consult a licensed professional for major repairs.</p>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+      document.getElementById('mobile-menu')?.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

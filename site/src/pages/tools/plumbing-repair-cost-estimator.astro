@@ -1,0 +1,59 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout title="Plumbing Repair Cost Estimator" description="Estimate costs for common plumbing repairs including leaky faucets, pipe repairs, drain cleaning, and water heater replacement." icon="🔧" category="Cost Estimators" categorySlug="cost-estimators">
+  <div slot="calculator">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Repair Type</label>
+        <select id="repair" onchange="updateDesc()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="150,350" data-d="Parts + 1-2 hrs labor">Leaky Faucet Repair</option>
+          <option value="175,400" data-d="Running toilet, valve, flapper replacement">Toilet Repair</option>
+          <option value="150,500" data-d="Snaking or hydro-jetting">Drain Cleaning / Unclog</option>
+          <option value="200,800" data-d="Pipe section repair or replacement">Pipe Leak Repair</option>
+          <option value="1000,3000" data-d="Replace tank water heater (40-50 gal)">Water Heater Replacement (Tank)</option>
+          <option value="2500,5000" data-d="Replace tankless unit + possible gas line">Water Heater Replacement (Tankless)</option>
+          <option value="300,800" data-d="Kitchen or bathroom faucet with install">Faucet Replacement</option>
+          <option value="250,600" data-d="Garbage disposal unit + installation">Garbage Disposal Install</option>
+          <option value="200,600" data-d="Shut-off valve, supply line replacement">Supply Line Repair</option>
+          <option value="3000,8000" data-d="Main sewer line repair or replacement">Sewer Line Repair</option>
+          <option value="1500,4000" data-d="Replace or reline sewer pipe">Sewer Line Replacement</option>
+          <option value="500,1500" data-d="New outdoor faucet or hose bib">Outdoor Spigot Install</option>
+        </select>
+      </div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Service Call Type</label>
+        <select id="urgency" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="1" selected>Standard (scheduled)</option>
+          <option value="1.5">Same-Day (+~50%)</option>
+          <option value="2">Emergency/After-Hours (+~100%)</option>
+        </select>
+      </div>
+    </div>
+    <p id="desc" class="text-sm text-gray-500 mt-3 italic"></p>
+    <button onclick="calc()" class="mt-4 bg-[#FF6B35] hover:bg-[#e55a2b] text-white font-semibold px-8 py-3 rounded-lg transition-colors w-full md:w-auto">Estimate Cost</button>
+    <div id="result" class="mt-6 hidden"><div class="bg-[#1B4965]/5 rounded-xl p-6"><h3 class="font-bold text-[#1B4965] text-lg mb-3">Plumbing Cost Estimate</h3><div id="res"></div></div></div>
+  </div>
+  <Fragment slot="content">
+    <h2>Average Plumbing Costs</h2>
+    <p>Plumbers charge <strong>$75-150 per hour</strong> plus a service call fee of $50-100. Most simple repairs take 1-2 hours. Emergency and after-hours calls can double the cost.</p>
+    <h2>DIY-Friendly Plumbing Repairs</h2>
+    <ul>
+      <li>✅ Replacing a toilet flapper ($5-10 part, 15 minutes)</li>
+      <li>✅ Unclogging a drain with a plunger or snake</li>
+      <li>✅ Replacing a showerhead</li>
+      <li>⚠️ Faucet replacement (moderate difficulty)</li>
+      <li>❌ Anything involving main water lines, gas, or sewer — hire a pro</li>
+    </ul>
+  </Fragment>
+</ToolLayout>
+<script is:inline>
+function updateDesc(){const s=document.getElementById('repair');document.getElementById('desc').textContent=s.options[s.selectedIndex].dataset.d;}
+updateDesc();
+function calc(){
+  const[lo,hi]=document.getElementById('repair').value.split(',').map(Number);
+  const urgency=parseFloat(document.getElementById('urgency').value);
+  const costLo=Math.round(lo*urgency);const costHi=Math.round(hi*urgency);
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('res').innerHTML=`
+    <div class="text-center"><div class="text-4xl font-bold text-[#FF6B35]">$${costLo.toLocaleString()} – $${costHi.toLocaleString()}</div><div class="text-sm text-gray-500 mt-1">${urgency>1?'Includes urgency surcharge':'Standard scheduling rate'}</div></div>`;
+}
+</script>

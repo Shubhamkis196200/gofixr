@@ -1,0 +1,88 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout title="Paint Calculator" description="Calculate how many gallons of paint you need for walls, ceilings, or exterior surfaces." icon="🎨" category="Material Calculators" categorySlug="material-calculators">
+  <div slot="calculator">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-semibold text-[#1B4965] mb-1">Room Length (ft)</label>
+        <input type="number" id="length" value="12" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" />
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-[#1B4965] mb-1">Room Width (ft)</label>
+        <input type="number" id="width" value="10" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" />
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-[#1B4965] mb-1">Wall Height (ft)</label>
+        <input type="number" id="height" value="8" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" />
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-[#1B4965] mb-1">Number of Coats</label>
+        <select id="coats" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="1">1 Coat</option>
+          <option value="2" selected>2 Coats</option>
+          <option value="3">3 Coats</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-[#1B4965] mb-1">Number of Doors</label>
+        <input type="number" id="doors" value="1" min="0" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" />
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-[#1B4965] mb-1">Number of Windows</label>
+        <input type="number" id="windows" value="2" min="0" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" />
+      </div>
+      <div>
+        <label class="inline-flex items-center gap-2 mt-4">
+          <input type="checkbox" id="ceiling" class="rounded border-gray-300 text-[#FF6B35] focus:ring-[#FF6B35]" />
+          <span class="text-sm font-semibold text-[#1B4965]">Include Ceiling</span>
+        </label>
+      </div>
+    </div>
+    <button onclick="calculate()" class="mt-6 bg-[#FF6B35] hover:bg-[#e55a2b] text-white font-semibold px-8 py-3 rounded-lg transition-colors w-full md:w-auto">Calculate Paint Needed</button>
+    <div id="result" class="mt-6 hidden">
+      <div class="bg-[#1B4965]/5 rounded-xl p-6">
+        <h3 class="font-bold text-[#1B4965] text-lg mb-3">Results</h3>
+        <div class="grid sm:grid-cols-3 gap-4" id="result-grid"></div>
+      </div>
+    </div>
+  </div>
+  <Fragment slot="content">
+    <h2>How to Calculate Paint Coverage</h2>
+    <p>One gallon of paint typically covers <strong>350-400 square feet</strong> of smooth surface. Textured walls may require more paint. This calculator uses 350 sq ft per gallon as a conservative estimate.</p>
+    <p>The formula subtracts 21 sq ft per door and 15 sq ft per window from the total wall area. Most rooms need 2 coats for even coverage, especially when changing colors.</p>
+    <h2>Tips for Accurate Paint Estimation</h2>
+    <ul>
+      <li><strong>Dark to light color changes</strong> may need a primer coat plus 2 finish coats</li>
+      <li><strong>Textured surfaces</strong> like stucco or popcorn ceilings use 20-30% more paint</li>
+      <li><strong>Always buy an extra quart</strong> for touch-ups later</li>
+      <li>Ceiling paint is thicker — coverage may be 250-300 sq ft per gallon</li>
+    </ul>
+  </Fragment>
+</ToolLayout>
+<script is:inline>
+function calculate() {
+  const l = parseFloat(document.getElementById('length').value) || 0;
+  const w = parseFloat(document.getElementById('width').value) || 0;
+  const h = parseFloat(document.getElementById('height').value) || 0;
+  const coats = parseInt(document.getElementById('coats').value);
+  const doors = parseInt(document.getElementById('doors').value) || 0;
+  const windows = parseInt(document.getElementById('windows').value) || 0;
+  const incCeiling = document.getElementById('ceiling').checked;
+  const wallArea = 2 * (l + w) * h;
+  const doorArea = doors * 21;
+  const windowArea = windows * 15;
+  let paintableArea = wallArea - doorArea - windowArea;
+  if (incCeiling) paintableArea += l * w;
+  const totalArea = paintableArea * coats;
+  const gallons = Math.ceil(totalArea / 350);
+  const costLow = (gallons * 30).toFixed(0);
+  const costHigh = (gallons * 60).toFixed(0);
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('result-grid').innerHTML = `
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${totalArea.toFixed(0)}</div><div class="text-sm text-gray-500">Total Sq Ft</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${gallons}</div><div class="text-sm text-gray-500">Gallons Needed</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#2D936C]">$${costLow}–$${costHigh}</div><div class="text-sm text-gray-500">Estimated Paint Cost</div></div>
+  `;
+}
+</script>

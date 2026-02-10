@@ -1,0 +1,51 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout title="Mulch Calculator" description="Calculate how many bags or cubic yards of mulch you need for your garden beds and landscaping." icon="🌿" category="Material Calculators" categorySlug="material-calculators">
+  <div slot="calculator">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Area Length (ft)</label><input type="number" id="len" value="20" min="0.1" step="0.1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Area Width (ft)</label><input type="number" id="wid" value="4" min="0.1" step="0.1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Desired Depth (inches)</label>
+        <select id="depth" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35]">
+          <option value="2">2 inches</option>
+          <option value="3" selected>3 inches (recommended)</option>
+          <option value="4">4 inches</option>
+          <option value="6">6 inches</option>
+        </select>
+      </div>
+      <div><label class="block text-sm font-semibold text-[#1B4965] mb-1">Price per Cubic Yard ($)</label><input type="number" id="price" value="35" min="0" step="0.5" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent" /></div>
+    </div>
+    <button onclick="calc()" class="mt-6 bg-[#FF6B35] hover:bg-[#e55a2b] text-white font-semibold px-8 py-3 rounded-lg transition-colors w-full md:w-auto">Calculate Mulch Needed</button>
+    <div id="result" class="mt-6 hidden"><div class="bg-[#1B4965]/5 rounded-xl p-6"><h3 class="font-bold text-[#1B4965] text-lg mb-3">Results</h3><div class="grid sm:grid-cols-4 gap-4" id="res"></div></div></div>
+  </div>
+  <Fragment slot="content">
+    <h2>How Much Mulch Do I Need?</h2>
+    <p>The ideal mulch depth is <strong>2-4 inches</strong>. Too thin and weeds break through; too thick and moisture can't reach roots. For most garden beds, 3 inches is recommended.</p>
+    <p>One cubic yard covers about 108 sq ft at 3" depth. A standard bag (2 cu ft) covers about 8 sq ft at 3" depth.</p>
+    <h2>Types of Mulch</h2>
+    <ul>
+      <li><strong>Hardwood mulch</strong>: $30-45/yard, decomposes slowly</li>
+      <li><strong>Pine bark</strong>: $30-40/yard, acidifies soil slightly</li>
+      <li><strong>Cedar mulch</strong>: $40-55/yard, natural pest repellent</li>
+      <li><strong>Rubber mulch</strong>: $80-120/yard, doesn't decompose, best for playgrounds</li>
+    </ul>
+  </Fragment>
+</ToolLayout>
+<script is:inline>
+function calc() {
+  const area = parseFloat(document.getElementById('len').value) * parseFloat(document.getElementById('wid').value);
+  const depth = parseFloat(document.getElementById('depth').value);
+  const price = parseFloat(document.getElementById('price').value) || 0;
+  const cubicYards = (area * (depth / 12)) / 27;
+  const bags2cf = Math.ceil((cubicYards * 27) / 2);
+  const cost = (cubicYards * price).toFixed(2);
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('res').innerHTML = `
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${cubicYards.toFixed(2)}</div><div class="text-sm text-gray-500">Cubic Yards</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${bags2cf}</div><div class="text-sm text-gray-500">Bags (2 cu ft)</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#FF6B35]">${area.toFixed(0)} ft²</div><div class="text-sm text-gray-500">Total Area</div></div>
+    <div class="text-center"><div class="text-3xl font-bold text-[#2D936C]">$${cost}</div><div class="text-sm text-gray-500">Material Cost</div></div>
+  `;
+}
+</script>
