@@ -1,102 +1,85 @@
-// Plumbing Repair Cost Estimator
+// Plumbing Repair Cost Estimator — detailed breakdown by fixture type with parts vs labor
 (function() {
+    const repairs = {
+        faucet:       { name: 'Faucet Repair/Replace', labor: [100, 250], parts: [50, 300], time: '1-2 hrs', difficulty: 'Easy' },
+        toilet:       { name: 'Toilet Repair', labor: [100, 200], parts: [15, 100], time: '1 hr', difficulty: 'Easy' },
+        toiletReplace:{ name: 'Toilet Replacement', labor: [150, 350], parts: [150, 600], time: '2-3 hrs', difficulty: 'Medium' },
+        drain:        { name: 'Drain Clog/Cleaning', labor: [100, 300], parts: [0, 50], time: '1-2 hrs', difficulty: 'Easy' },
+        leak:         { name: 'Pipe Leak Repair', labor: [150, 400], parts: [20, 150], time: '1-3 hrs', difficulty: 'Medium' },
+        waterHeater:  { name: 'Water Heater Repair', labor: [200, 500], parts: [50, 400], time: '2-4 hrs', difficulty: 'Medium' },
+        sewer:        { name: 'Main Sewer Line Issue', labor: [500, 3000], parts: [100, 1000], time: '4-8 hrs', difficulty: 'Hard' },
+        repipe:       { name: 'Pipe Replacement (section)', labor: [300, 800], parts: [100, 500], time: '3-6 hrs', difficulty: 'Hard' },
+        fixture:      { name: 'Install New Fixture', labor: [150, 400], parts: [100, 800], time: '2-4 hrs', difficulty: 'Medium' },
+        disposal:     { name: 'Garbage Disposal Replace', labor: [150, 350], parts: [100, 400], time: '1-2 hrs', difficulty: 'Medium' },
+        shower:       { name: 'Shower Valve Repair', labor: [200, 600], parts: [100, 400], time: '2-4 hrs', difficulty: 'Hard' }
+    };
     const content = {
         interface: `
             <h2 class="text-2xl font-bold mb-6">Plumbing Repair Cost Estimator</h2>
             <form id="costForm" class="space-y-4">
-                <div class="input-group">
-                    <label>Type of Repair</label>
-                    <select id="repairType">
-                        <option value="faucet">Faucet Repair/Replace</option>
-                        <option value="toilet">Toilet Repair</option>
-                        <option value="drain">Drain Clog/Cleaning</option>
-                        <option value="leak">Pipe Leak Repair</option>
-                        <option value="water-heater">Water Heater Repair</option>
-                        <option value="sewer">Main Sewer Line Issue</option>
-                        <option value="repipe">Pipe Replacement (section)</option>
-                        <option value="fixture">Install New Fixture</option>
-                    </select>
+                <div class="input-group"><label>Type of Repair</label>
+                    <select id="repair"><option value="faucet">Faucet Repair/Replace</option><option value="toilet" selected>Toilet Repair</option><option value="toiletReplace">Toilet Replacement</option><option value="drain">Drain Clog/Cleaning</option><option value="leak">Pipe Leak Repair</option><option value="waterHeater">Water Heater Repair</option><option value="sewer">Main Sewer Line Issue</option><option value="repipe">Pipe Replacement (section)</option><option value="fixture">Install New Fixture</option><option value="disposal">Garbage Disposal Replace</option><option value="shower">Shower Valve Repair</option></select>
                 </div>
-                <div class="input-group">
-                    <label>Urgency</label>
-                    <select id="urgency">
-                        <option value="standard" selected>Standard (schedule appointment)</option>
-                        <option value="urgent">Urgent (same day)</option>
-                        <option value="emergency">Emergency (after hours)</option>
-                    </select>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="input-group"><label>Time of Day</label>
+                        <select id="timeOfDay"><option value="1.0" selected>Normal Hours (8am-5pm)</option><option value="1.5">After Hours (5pm-10pm)</option><option value="2.0">Emergency (nights/weekends)</option></select>
+                    </div>
+                    <div class="input-group"><label>Your Location</label>
+                        <select id="location"><option value="0.85">Rural / Low COL</option><option value="1.0" selected>Suburban</option><option value="1.25">Urban</option><option value="1.5">Major Metro (NYC, SF, LA)</option></select>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>Pipe Type (if applicable)</label>
-                    <select id="pipeType">
-                        <option value="na">N/A</option>
-                        <option value="copper" selected>Copper</option>
-                        <option value="pex">PEX</option>
-                        <option value="galv">Galvanized Steel</option>
-                        <option value="pvc">PVC/CPVC</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Access Difficulty</label>
-                    <select id="access">
-                        <option value="easy">Easy (exposed pipes)</option>
-                        <option value="standard" selected>Standard</option>
-                        <option value="hard">Difficult (in walls/slab)</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-primary w-full">Calculate Plumbing Cost</button>
+                <div class="input-group"><label><input type="checkbox" id="emergency"> Emergency/Same-Day Service</label></div>
+                <button type="submit" class="btn-primary w-full">Calculate Repair Cost</button>
             </form>
             <div id="result" class="hidden"></div>
         `,
         education: `
-            <h2 class="text-3xl font-bold mb-4">Understanding Plumbing Repair Costs</h2>
-            <p class="mb-4">Plumbers charge $75-150/hour for service calls, with most repairs billed as flat rates. Simple fixes like replacing a faucet washer cost $100-200, while major jobs like sewer line replacement can run $3,000-$25,000. Emergency and after-hours calls often carry 1.5-2x surcharges.</p>
-            <div class="pro-tip mb-6"><h4 class="font-bold">💡 Pro Tip</h4><p>Many "emergency" calls can wait until morning with a quick DIY fix. Locate your main water shutoff NOW before you need it. A shut-off valve under the leaking sink can buy you 12 hours until a plumber arrives during normal business hours, saving $200+ in emergency fees.</p></div>
-            <h3 class="text-2xl font-bold mt-6 mb-3">Common Plumbing Repair Costs</h3>
+            <h2 class="text-3xl font-bold mb-4">Plumbing Repair Cost Guide</h2>
+            <p class="mb-4">Most plumbing repairs cost $150-$500. Service call fees ($50-$150) are common and often waived if you hire them for the repair. Emergency/after-hours service costs 1.5-2× the normal rate. Always get a written estimate before work begins.</p>
+            <div class="pro-tip mb-6"><h4 class="font-bold">💡 Pro Tip</h4><p>A slow drip wastes 15-20 gallons/day and costs ~$50/year. A running toilet wastes 200 gallons/day ($200+/year). Most leaks are DIY-fixable in 30 minutes with a $5-20 part from the hardware store. Try the DIY fix first — if you can't solve it in an hour, call a plumber.</p></div>
+            <h3 class="text-2xl font-bold mt-6 mb-3">When to Call a Plumber Immediately</h3>
             <ul class="list-disc pl-6 space-y-2 mb-4">
-                <li><strong>Faucet Repair:</strong> $120-250 for cartridge/washer replacement. $200-500 for full faucet replacement</li>
-                <li><strong>Toilet Repair:</strong> $150-300 for flapper/fill valve. $200-500 for wax ring/reset. $400-800 for new toilet install</li>
-                <li><strong>Drain Cleaning:</strong> $100-250 for simple snake. $350-600 for hydro-jetting. $3,000+ for sewer camera + repair</li>
-                <li><strong>Pipe Leak:</strong> $150-350 for accessible copper pinhole. $500-2,000 for hidden leaks requiring wall/floor access</li>
-                <li><strong>Water Heater:</strong> $150-400 for thermostat/element. $1,000-3,000 for full replacement</li>
+                <li><strong>Gas line issues:</strong> If you smell gas, evacuate and call the gas company + a licensed plumber</li>
+                <li><strong>Main line backups:</strong> Sewage backing up into multiple drains = main sewer line issue</li>
+                <li><strong>No hot water (winter):</strong> A water heater failure in winter is an emergency</li>
+                <li><strong>Burst pipe:</strong> Turn off main water valve immediately, call emergency plumber</li>
+                <li><strong>Major leak:</strong> If you can't stop the water flow, it's an emergency</li>
             </ul>
-            <h3 class="text-2xl font-bold mt-6 mb-3">When to Call a Plumber vs DIY</h3>
-            <p class="mb-4"><strong>DIY-friendly:</strong> Replacing faucet aerators, toilet flappers, showerheads, or snaking a drain. <strong>Call a pro:</strong> Anything involving gas lines, sewer work, or cutting into walls. Plumbing mistakes cause water damage costing 10-100x the cost of hiring a pro from the start.</p>
+            <h3 class="text-2xl font-bold mt-6 mb-3">Common DIY Fixes</h3>
+            <ul class="list-disc pl-6 space-y-2">
+                <li><strong>Running toilet:</strong> 90% of the time it's a $5 flapper. 5-minute fix.</li>
+                <li><strong>Dripping faucet:</strong> Replace cartridge or O-ring. $10-30 part, 30-min job.</li>
+                <li><strong>Clogged drain:</strong> Try a plunger first, then a $15 drain snake before calling a pro.</li>
+                <li><strong>Low water pressure:</strong> Clean aerator screens on faucets (unscrew, rinse, reassemble).</li>
+            </ul>
         `
     };
-    const repairBase = {faucet:{base:180,hours:1.5},toilet:{base:220,hours:2},drain:{base:200,hours:1.5},leak:{base:280,hours:2.5},waterheater:{base:350,hours:3},'sewer':{base:1200,hours:6},repipe:{base:500,hours:4},fixture:{base:300,hours:2}};
-    const urgencyMult = {standard:1.0,urgent:1.5,emergency:2.0};
-    const accessMult = {easy:0.85,standard:1.0,hard:1.6};
     function calculate(e) {
         e.preventDefault();
-        const repair = document.getElementById('repairType').value;
-        const urg = document.getElementById('urgency').value;
-        const pipe = document.getElementById('pipeType').value;
-        const acc = document.getElementById('access').value;
-        const rb = repairBase[repair];
-        const hourlyRate = 95;
-        const laborCost = rb.hours * hourlyRate * accessMult[acc];
-        const parts = rb.base - (rb.hours * hourlyRate * 0.4);
-        const urgSurcharge = urg !== 'standard' ? rb.base * (urgencyMult[urg] - 1.0) : 0;
-        const total = rb.base * accessMult[acc] * urgencyMult[urg];
-        const callFee = urg === 'emergency' ? 150 : urg === 'urgent' ? 75 : 0;
-        const finalTotal = total + callFee;
-        const warnings = [];
-        if (pipe === 'galv') warnings.push('⚠️ Galvanized pipes are obsolete and often corroded inside. Your plumber may recommend full replacement.');
-        if (repair === 'sewer') warnings.push('💡 Sewer line issues often require camera inspection ($200-400) before repair to locate the problem.');
-        if (acc === 'hard') warnings.push('Hidden pipe access may require cutting drywall, flooring, or exterior walls. Budget for repair/patching.');
+        const repairKey = document.getElementById('repair').value;
+        const r = repairs[repairKey];
+        const timeOfDay = parseFloat(document.getElementById('timeOfDay').value);
+        const location = parseFloat(document.getElementById('location').value);
+        const emergency = document.getElementById('emergency').checked ? 1.25 : 1.0;
+        const laborLow = Math.round(r.labor[0] * timeOfDay * location * emergency);
+        const laborHigh = Math.round(r.labor[1] * timeOfDay * location * emergency);
+        const partsLow = r.parts[0];
+        const partsHigh = r.parts[1];
+        const totalLow = laborLow + partsLow;
+        const totalHigh = laborHigh + partsHigh;
+        const tripCharge = timeOfDay > 1.0 || emergency > 1.0 ? 100 : 75;
         document.getElementById('result').className = 'result-box mt-6';
         document.getElementById('result').innerHTML = `
-            <h3 class="text-2xl font-bold mb-4">Plumbing Estimate: $${Math.round(finalTotal).toLocaleString()}</h3>
-            <div class="bg-white bg-opacity-20 rounded-lg p-4 mb-4"><div class="space-y-2 text-sm">
-                <div class="flex justify-between"><span>Base Repair Cost:</span><span>$${Math.round(rb.base).toLocaleString()}</span></div>
-                ${acc!=='standard'?`<div class="flex justify-between"><span>Access ${acc==='hard'?'Difficulty':'Easy'} Adj:</span><span>${acc==='hard'?'+':'-'}${Math.abs((accessMult[acc]-1)*100).toFixed(0)}%</span></div>`:''}
-                ${urgSurcharge>0?`<div class="flex justify-between"><span>${urg==='emergency'?'Emergency':'Urgent'} Surcharge:</span><span>$${Math.round(urgSurcharge).toLocaleString()}</span></div>`:''}
-                ${callFee>0?`<div class="flex justify-between"><span>After-Hours Call Fee:</span><span>$${callFee}</span></div>`:''}
+            <h3 class="text-3xl font-bold mb-4">$${totalLow.toLocaleString()} – $${totalHigh.toLocaleString()}</h3>
+            <div class="bg-white bg-opacity-20 rounded-lg p-4"><div class="space-y-2">
+                <div class="flex justify-between"><span>Repair type:</span><span>${r.name}</span></div>
+                <div class="flex justify-between"><span>Labor:</span><span>$${laborLow.toLocaleString()} – $${laborHigh.toLocaleString()}</span></div>
+                <div class="flex justify-between"><span>Parts/Materials:</span><span>$${partsLow} – $${partsHigh}</span></div>
+                <div class="flex justify-between"><span>Service call fee:</span><span>~$${tripCharge} (often waived)</span></div>
                 <hr class="border-white border-opacity-30 my-2">
-                <div class="flex justify-between font-bold text-lg"><span>Total:</span><span>$${Math.round(finalTotal).toLocaleString()}</span></div>
-                <div class="flex justify-between opacity-80 text-sm"><span>Est. Hours:</span><span>${(rb.hours * accessMult[acc]).toFixed(1)} hrs</span></div>
+                <div class="flex justify-between font-bold text-lg"><span>Total estimate:</span><span>$${totalLow.toLocaleString()} – $${totalHigh.toLocaleString()}</span></div>
+                <div class="text-sm mt-2 opacity-80">Time: ${r.time} | DIY Difficulty: ${r.difficulty}</div>
             </div></div>
-            ${warnings.length>0?`<div class="bg-orange-900 bg-opacity-40 rounded-lg p-3">${warnings.map(w=>`<p class="text-sm mb-1">${w}</p>`).join('')}</div>`:''}
         `;
     }
     document.getElementById('toolInterface').innerHTML = content.interface;

@@ -1,137 +1,106 @@
-// Roof Replacement Cost Estimator
+// Roof Replacement Cost Estimator — material-specific with pitch, square footage, and tearoff
 (function() {
+    const materials = {
+        asphalt3:   { name: '3-Tab Asphalt Shingles', costPerSq: [90, 150], lifespan: 20, weight: 'Light' },
+        asphaltArch:{ name: 'Architectural Asphalt', costPerSq: [120, 200], lifespan: 30, weight: 'Medium' },
+        metal:      { name: 'Metal Roofing (steel)', costPerSq: [300, 600], lifespan: 50, weight: 'Light' },
+        tile:       { name: 'Concrete/Clay Tile', costPerSq: [400, 900], lifespan: 50, weight: 'Heavy' },
+        slate:      { name: 'Natural Slate', costPerSq: [800, 1500], lifespan: 100, weight: 'Heavy' },
+        wood:       { name: 'Cedar Shake', costPerSq: [350, 700], lifespan: 30, weight: 'Medium' },
+        tpo:        { name: 'TPO (flat/low-slope)', costPerSq: [250, 450], lifespan: 25, weight: 'Light' }
+    };
     const content = {
         interface: `
             <h2 class="text-2xl font-bold mb-6">Roof Replacement Cost Estimator</h2>
             <form id="costForm" class="space-y-4">
-                <div class="input-group">
-                    <label>Roof Area (sq ft) — or home footprint × 1.15 for typical pitch</label>
-                    <input type="number" id="sqft" min="500" value="2000" step="100" required>
-                </div>
-                <div class="input-group">
-                    <label>Roofing Material</label>
-                    <select id="material">
-                        <option value="3tab">3-Tab Asphalt Shingles (20-yr)</option>
-                        <option value="arch" selected>Architectural Asphalt (30-yr)</option>
-                        <option value="metal">Standing Seam Metal</option>
-                        <option value="tile">Clay/Concrete Tile</option>
-                        <option value="slate">Natural Slate</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Roof Pitch (Steepness)</label>
-                    <select id="pitch">
-                        <option value="low">Low (3/12 or less — walkable)</option>
-                        <option value="medium" selected>Medium (4/12 to 8/12 — standard)</option>
-                        <option value="steep">Steep (9/12+ — requires special equipment)</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Layers to Remove</label>
-                    <select id="layers">
-                        <option value="1" selected>1 layer (standard tear-off)</option>
-                        <option value="2">2 layers (double tear-off)</option>
-                        <option value="3">3 layers (extensive removal)</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Additional Work Needed</label>
-                    <div class="space-y-2 mt-1">
-                        <label class="flex items-center gap-2"><input type="checkbox" id="decking"> Replace Damaged Decking/Sheathing</label>
-                        <label class="flex items-center gap-2"><input type="checkbox" id="gutters"> New Gutters</label>
-                        <label class="flex items-center gap-2"><input type="checkbox" id="skylights"> Skylights (re-flash or add)</label>
-                        <label class="flex items-center gap-2"><input type="checkbox" id="chimney"> Chimney Flashing</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="input-group"><label>Roof Area (sq ft)</label><input type="number" id="sqft" min="800" value="2000" step="100" required>
+                        <p class="text-xs text-gray-500 mt-1">Roofing pros use "squares" (1 square = 100 sqft)</p>
                     </div>
+                    <div class="input-group"><label>Roof Pitch</label>
+                        <select id="pitch"><option value="1.0">Low (≤4:12) — easy to walk</option><option value="1.15" selected>Medium (5-7:12) — standard</option><option value="1.3">Steep (8-12:12) — walkable with gear</option><option value="1.5">Very Steep (>12:12) — scaffolding</option></select>
+                    </div>
+                </div>
+                <div class="input-group"><label>Roofing Material</label>
+                    <select id="material"><option value="asphalt3">3-Tab Asphalt ($90-150/sq)</option><option value="asphaltArch" selected>Architectural Asphalt ($120-200/sq)</option><option value="metal">Metal Roofing ($300-600/sq)</option><option value="tile">Concrete/Clay Tile ($400-900/sq)</option><option value="slate">Natural Slate ($800-1500/sq)</option><option value="wood">Cedar Shake ($350-700/sq)</option><option value="tpo">TPO Flat Roof ($250-450/sq)</option></select>
+                </div>
+                <div class="input-group"><label>Roof Complexity</label>
+                    <select id="complexity"><option value="1.0">Simple (1-2 planes, few penetrations)</option><option value="1.2" selected>Average (multiple planes, chimneys)</option><option value="1.4">Complex (valleys, dormers, skylights)</option></select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <label class="flex items-center gap-2"><input type="checkbox" id="tearoff" checked> Tear off old roof ($1-2/sqft)</label>
+                    <label class="flex items-center gap-2"><input type="checkbox" id="plywood"> Replace damaged plywood (~10%)</label>
+                    <label class="flex items-center gap-2"><input type="checkbox" id="underlayment" checked> Synthetic underlayment upgrade</label>
+                    <label class="flex items-center gap-2"><input type="checkbox" id="iceWater"> Ice & water shield (cold climates)</label>
                 </div>
                 <button type="submit" class="btn-primary w-full">Calculate Roof Cost</button>
             </form>
             <div id="result" class="hidden"></div>
         `,
         education: `
-            <h2 class="text-3xl font-bold mb-4">Complete Guide to Roof Replacement Costs</h2>
-            <p class="mb-4">A new roof is one of the most expensive home maintenance projects, averaging $8,000-$15,000 for a typical home with asphalt shingles. However, costs vary dramatically based on material choice, roof size, pitch, and your location. This estimator accounts for the factors that actually drive roof pricing — not just square footage.</p>
-            
-            <div class="pro-tip mb-6">
-                <h4 class="font-bold">💡 Pro Tip</h4>
-                <p>Roofing is measured in "squares" (1 square = 100 sq ft). A typical 2,000 sq ft roof is 20 squares. When getting quotes, ask contractors to break down material cost per square, labor per square, tear-off, and any additional work. This makes apples-to-apples comparison possible.</p>
-            </div>
-            
-            <h3 class="text-2xl font-bold mt-6 mb-3">Roofing Material Lifespans & Costs</h3>
+            <h2 class="text-3xl font-bold mb-4">Roof Replacement Cost Guide</h2>
+            <p class="mb-4">The average roof replacement costs $5,500-$12,000 for asphalt shingles on a 2,000 sqft roof. Roofing is priced by the "square" (100 sqft). A typical home is 15-25 squares. Material is 40% of cost, labor is 60%.</p>
+            <div class="pro-tip mb-6"><h4 class="font-bold">💡 Pro Tip</h4><p>Never go with the lowest bid for roofing. A bad roof job can cost $10,000-$20,000 to fix (tear off and redo). Check references, verify insurance, and get a written warranty. Most quality roofers are booked 4-8 weeks out — if someone can "start tomorrow," that's a red flag.</p></div>
+            <h3 class="text-2xl font-bold mt-6 mb-3">Roofing Material Lifespan</h3>
             <ul class="list-disc pl-6 space-y-2 mb-4">
-                <li><strong>3-Tab Asphalt:</strong> $3.50-5.50/sqft installed. 15-20 year lifespan. Most affordable, least durable</li>
-                <li><strong>Architectural Asphalt:</strong> $4.50-7.50/sqft. 25-30 year lifespan. Best value for most homes</li>
-                <li><strong>Standing Seam Metal:</strong> $9-14/sqft. 40-60 year lifespan. Energy-efficient, great for snow</li>
-                <li><strong>Clay/Concrete Tile:</strong> $10-18/sqft. 50+ year lifespan. Excellent in hot climates. Very heavy — may need structural reinforcement</li>
-                <li><strong>Natural Slate:</strong> $15-30/sqft. 75-100+ year lifespan. Stunning but extremely expensive and heavy</li>
+                <li><strong>3-Tab Asphalt:</strong> 15-20 years. Cheapest option. Prone to wind damage.</li>
+                <li><strong>Architectural Asphalt:</strong> 25-30 years. Most popular. Good wind/hail resistance. Best value.</li>
+                <li><strong>Metal:</strong> 40-70 years. Expensive upfront but lasts 2-3× longer. Energy-efficient (reflects heat).</li>
+                <li><strong>Tile:</strong> 40-50+ years. Very durable. Heavy — may require structural reinforcement.</li>
+                <li><strong>Slate:</strong> 75-100+ years. Most expensive. Extremely heavy. Premium homes only.</li>
             </ul>
-            
-            <h3 class="text-2xl font-bold mt-6 mb-3">Hidden Costs to Watch For</h3>
-            <p class="mb-4">The biggest surprise cost is damaged decking (plywood sheathing under shingles). Roofers can't assess this until the old roof is removed. Budget $50-75 per sheet of plywood replacement. Other extras include ice & water shield in cold climates, ridge vent installation, drip edge replacement, and valley flashing. A reputable roofer will include these in their detailed quote.</p>
-            
             <h3 class="text-2xl font-bold mt-6 mb-3">Signs You Need a New Roof</h3>
-            <ul class="list-disc pl-6 space-y-2 mb-4">
-                <li>Shingles are curling, cracking, or missing granules</li>
-                <li>Multiple active leaks or water stains on ceilings</li>
-                <li>Roof is 20+ years old (for asphalt shingles)</li>
-                <li>Sagging roof deck visible from outside</li>
-                <li>Daylight visible through roof boards in attic</li>
+            <ul class="list-disc pl-6 space-y-2">
+                <li>Shingles curling, cupping, or missing granules (balding)</li>
+                <li>Missing or cracked shingles</li>
+                <li>Roof age > 20 years (asphalt) or > 30 years (other)</li>
+                <li>Daylight visible through roof boards (in attic)</li>
+                <li>Water stains on ceiling or attic mold</li>
             </ul>
         `
     };
-
-    const matCosts = {'3tab':{mat:1.80,lab:2.50},'arch':{mat:2.80,lab:3.00},'metal':{mat:5.50,lab:5.00},'tile':{mat:7.00,lab:6.50},'slate':{mat:12.00,lab:10.00}};
-    const pitchMult = {low:1.0,medium:1.15,steep:1.45};
-
     function calculate(e) {
         e.preventDefault();
         const sqft = parseFloat(document.getElementById('sqft').value);
-        const mat = document.getElementById('material').value;
-        const pitch = document.getElementById('pitch').value;
-        const layers = parseInt(document.getElementById('layers').value);
-        const mc = matCosts[mat];
-        const pm = pitchMult[pitch];
-
-        const materialCost = sqft * mc.mat;
-        const laborCost = sqft * mc.lab * pm;
-        const tearOff = sqft * 1.00 * layers;
-        const underlayment = sqft * 0.50;
-        const flashingVents = sqft * 0.35;
-        const dumpster = 350 + (layers > 1 ? 200 : 0);
-        const permits = 300;
-
-        let extras = 0, extraItems = [];
-        if (document.getElementById('decking').checked) { const c = sqft * 0.15 * 50; extras += c; extraItems.push({name:'Decking Repair (~15%)',cost:c}); }
-        if (document.getElementById('gutters').checked) { const p = Math.sqrt(sqft)*4; const c = p * 8; extras += c; extraItems.push({name:'New Gutters',cost:c}); }
-        if (document.getElementById('skylights').checked) { extras += 1500; extraItems.push({name:'Skylight Flashing',cost:1500}); }
-        if (document.getElementById('chimney').checked) { extras += 500; extraItems.push({name:'Chimney Flashing',cost:500}); }
-
-        const subtotal = materialCost + laborCost + tearOff + underlayment + flashingVents + dumpster + permits + extras;
-        const contingency = subtotal * 0.10;
-        const total = subtotal + contingency;
         const squares = sqft / 100;
-
+        const pitch = parseFloat(document.getElementById('pitch').value);
+        const matKey = document.getElementById('material').value;
+        const complexity = parseFloat(document.getElementById('complexity').value);
+        const tearoff = document.getElementById('tearoff').checked;
+        const plywood = document.getElementById('plywood').checked;
+        const underlayment = document.getElementById('underlayment').checked;
+        const ice = document.getElementById('iceWater').checked;
+        const mat = materials[matKey];
+        const matLow = squares * mat.costPerSq[0];
+        const matHigh = squares * mat.costPerSq[1];
+        const laborLow = squares * 150 * pitch * complexity;
+        const laborHigh = squares * 250 * pitch * complexity;
+        const tearoffCost = tearoff ? sqft * 1.5 : 0;
+        const plywoodCost = plywood ? Math.round(sqft * 0.1 * 3.5) : 0;
+        const underlaymentCost = underlayment ? Math.round(squares * 80) : 0;
+        const iceCost = ice ? Math.round(squares * 120) : 0;
+        const permitCost = 200;
+        const totalLow = Math.round(matLow + laborLow + tearoffCost + plywoodCost + underlaymentCost + iceCost + permitCost);
+        const totalHigh = Math.round(matHigh + laborHigh + tearoffCost + plywoodCost + underlaymentCost + iceCost + permitCost);
         document.getElementById('result').className = 'result-box mt-6';
         document.getElementById('result').innerHTML = `
-            <h3 class="text-2xl font-bold mb-4">Roof Estimate: $${Math.round(total).toLocaleString()}</h3>
-            <p class="text-sm mb-3">${squares.toFixed(0)} squares · ${pitch} pitch · ${layers}-layer tear-off</p>
-            <div class="bg-white bg-opacity-20 rounded-lg p-4 mb-4">
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between"><span>Roofing Material:</span><span>$${Math.round(materialCost).toLocaleString()}</span></div>
-                    <div class="flex justify-between"><span>Labor:</span><span>$${Math.round(laborCost).toLocaleString()}</span></div>
-                    <div class="flex justify-between"><span>Tear-Off & Disposal:</span><span>$${Math.round(tearOff+dumpster).toLocaleString()}</span></div>
-                    <div class="flex justify-between"><span>Underlayment:</span><span>$${Math.round(underlayment).toLocaleString()}</span></div>
-                    <div class="flex justify-between"><span>Flashing & Vents:</span><span>$${Math.round(flashingVents).toLocaleString()}</span></div>
-                    <div class="flex justify-between"><span>Permits:</span><span>$${permits}</span></div>
-                    ${extraItems.map(x=>`<div class="flex justify-between"><span>${x.name}:</span><span>$${Math.round(x.cost).toLocaleString()}</span></div>`).join('')}
-                    <div class="flex justify-between"><span>10% Contingency:</span><span>$${Math.round(contingency).toLocaleString()}</span></div>
-                    <hr class="border-white border-opacity-30 my-2">
-                    <div class="flex justify-between text-lg font-bold"><span>Total:</span><span>$${Math.round(total).toLocaleString()}</span></div>
-                    <div class="flex justify-between opacity-80"><span>Per square (100 sqft):</span><span>$${Math.round(total/squares).toLocaleString()}</span></div>
-                </div>
-            </div>
+            <h3 class="text-3xl font-bold mb-4">$${totalLow.toLocaleString()} – $${totalHigh.toLocaleString()}</h3>
+            <div class="bg-white bg-opacity-20 rounded-lg p-4"><div class="space-y-2">
+                <div class="flex justify-between"><span>Roof area:</span><span>${sqft.toLocaleString()} sqft (${squares.toFixed(1)} squares)</span></div>
+                <div class="flex justify-between"><span>Material (${mat.name}):</span><span>$${Math.round(matLow).toLocaleString()} – $${Math.round(matHigh).toLocaleString()}</span></div>
+                <div class="flex justify-between"><span>Labor:</span><span>$${Math.round(laborLow).toLocaleString()} – $${Math.round(laborHigh).toLocaleString()}</span></div>
+                ${tearoffCost > 0 ? `<div class="flex justify-between"><span>Tear-off old roof:</span><span>$${tearoffCost.toLocaleString()}</span></div>` : ''}
+                ${plywoodCost > 0 ? `<div class="flex justify-between"><span>Plywood replacement (~10%):</span><span>$${plywoodCost.toLocaleString()}</span></div>` : ''}
+                ${underlaymentCost > 0 ? `<div class="flex justify-between"><span>Synthetic underlayment:</span><span>$${underlaymentCost.toLocaleString()}</span></div>` : ''}
+                ${iceCost > 0 ? `<div class="flex justify-between"><span>Ice & water shield:</span><span>$${iceCost.toLocaleString()}</span></div>` : ''}
+                <div class="flex justify-between"><span>Permit:</span><span>~$${permitCost}</span></div>
+                <hr class="border-white border-opacity-30 my-2">
+                <div class="flex justify-between font-bold text-lg"><span>Total:</span><span>$${totalLow.toLocaleString()} – $${totalHigh.toLocaleString()}</span></div>
+                <div class="flex justify-between opacity-80"><span>Per square:</span><span>$${Math.round(totalLow/squares)} – $${Math.round(totalHigh/squares)}/sq</span></div>
+                <div class="text-sm mt-2 opacity-80">Expected lifespan: ${mat.lifespan} years</div>
+            </div></div>
         `;
     }
-
     document.getElementById('toolInterface').innerHTML = content.interface;
     document.getElementById('educationalContent').innerHTML = content.education;
     document.getElementById('costForm').addEventListener('submit', calculate);
