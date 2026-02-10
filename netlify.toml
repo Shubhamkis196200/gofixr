@@ -1,0 +1,27 @@
+# Netlify configuration for GoFixr static HTML site
+[build]
+  publish = "."
+  command = ""
+
+# Redirect /tools to /tools/ for cleaner URLs
+[[redirects]]
+  from = "/tools"
+  to = "/tools/"
+  status = 301
+
+# Custom 404
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
